@@ -70,7 +70,6 @@ DEPENDENCIES
   minitest-rg
   pry
   puma
-  rack-flash3
   rack-ssl-enforcer
   rake
   rerun
