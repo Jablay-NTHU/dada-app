@@ -3,7 +3,7 @@
 require 'roda'
 
 module Dada
-  # Web controller for Credence API
+  # Web controller for Dada API
   class App < Roda
     route('auth') do |routing| # rubocop:disable Metrics/BlockLength
       @login_route = '/auth/login'
