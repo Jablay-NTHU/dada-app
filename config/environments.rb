@@ -47,6 +47,5 @@ module Dada
         exec 'pry -r ./specs/test_load_all'
       end
     end
-    
   end
 end
