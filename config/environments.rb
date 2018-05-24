@@ -14,7 +14,7 @@ module Dada
     Econfig.env = environment.to_s
     Econfig.root = '.'
 
-    configure :production do
+    configure do
       SecureSession.setup(config)
       SecureMessage.setup(config)
     end
@@ -22,16 +22,14 @@ module Dada
     ONE_MONTH = 30 * 24 * 60 * 60 # in seconds
 
     configure :development, :test do
-
       # use Rack::Session::Cookie,
-      # expire_after: ONE_MONTH, secret: config.SESSION_SECRET
+      #     expire_after: ONE_MONTH, secret: config.SESSION_SECRET
 
       use Rack::Session::Pool,
-      expire_after: ONE_MONTH
+          expire_after: ONE_MONTH
 
       # use Rack::Session::Redis,
-      # expire_after: ONE_MONTH, redis_server: App.config.REDIS_URL
-
+      #     expire_after: ONE_MONTH, redis_server: App.config.REDIS_URL
     end
 
     configure :production do
@@ -47,6 +45,5 @@ module Dada
         exec 'pry -r ./specs/test_load_all'
       end
     end
-    
   end
 end
