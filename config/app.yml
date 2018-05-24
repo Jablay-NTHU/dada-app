@@ -8,5 +8,5 @@ test:
   API_URL: http://localhost:9292/api/v1
 
 production:
-  API_URL: https://jablaydada.herokuapp.com/api/v1
+  API_URL: https://jablaydada-api.herokuapp.com/api/v1
   APP_URL: https://jablaydada-app.herokuapp.com
