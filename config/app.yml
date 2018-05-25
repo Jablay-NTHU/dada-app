@@ -1,11 +1,11 @@
 ---
 development:
-  APP_URL: http://localhost:3000
   API_URL: http://localhost:9292/api/v1
+  APP_URL: http://localhost:3000
 
 test:
-  APP_URL: http://localhost:3000
   API_URL: http://localhost:9292/api/v1
+  APP_URL: http://localhost:3000
 
 production:
   API_URL: https://jablaydada-api.herokuapp.com/api/v1

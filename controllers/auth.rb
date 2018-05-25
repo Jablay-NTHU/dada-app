@@ -38,22 +38,35 @@ module Dada
       end
 
       @register_route = '/auth/register'
-      routing.is 'register' do
-        routing.get do
-          view :register
+      routing.on 'register' do
+        routing.is do
+          routing.get do
+            view :register
+          end
+
+          routing.post do
+            account_data = JsonRequestBody.symbolize(routing.params)
+            VerifyRegistration.new(App.config).call(account_data)
+
+            # CreateAccount.new(App.config).call(account_data)
+
+            flash[:notice] = 'Please check your email verification'
+            routing.redirect '/'
+          rescue StandardError => error
+            puts "ERROR CREATING ACCOUNT: #{error.inspect}"
+            puts error.backtrace
+            flash[:error] = 'Account detail are not valid: please check...'
+            routing.redirect @register_route
+          end
         end
 
-        routing.post do
-          account_data = JsonRequestBody.symbolize(routing.params)
-          CreateAccount.new(App.config).call(account_data)
-
-          flash[:notice] = 'Please login with your new account information'
-          routing.redirect '/auth/login'
-        rescue StandardError => error
-          puts "ERROR CREATING ACCOUNT: #{error.inspect}"
-          puts error.backtrace
-          flash[:error] = 'Could not create account'
-          routing.redirect @register_route
+        routing.on String do |registration_token|
+          routing.get do
+          new_account = SecureMessage.decrypt(registration_token)
+          view :register_confirm,
+               locals: { new_account: new_account,
+                         registration_token: registration_token }
+          end
         end
       end
     end
