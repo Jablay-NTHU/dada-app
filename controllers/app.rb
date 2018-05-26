@@ -7,7 +7,7 @@ module Dada
   # Base class for Dada Web Application
   class App < Roda
     plugin :render, engine: 'slim', views: 'views'
-    plugin :assets, css: 'style.css', path: 'assets'
+    plugin :assets, css: ['style.bundle.css', 'vendors.bundle.css'], path: 'assets'
     plugin :public, root: 'public'
     plugin :multi_route
     plugin :flash
