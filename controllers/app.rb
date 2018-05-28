@@ -7,11 +7,13 @@ module Dada
   # Base class for Dada Web Application
   class App < Roda
     plugin :render, engine: 'slim', views: 'views'
-    plugin :assets, css: 'style.css', path: 'assets'
+    plugin :assets, css: ['style.bundle.css', 'vendors.bundle.css'],
+                    path: 'assets'
     plugin :public, root: 'public'
     plugin :multi_route
     plugin :flash
 
+    # 'vendors.bundle.js', 'scripts.bundle.js', 'dashboard.js'
     route do |routing|
       @current_account = SecureSession.new(session).get(:current_account)
 
@@ -21,6 +23,7 @@ module Dada
 
       # GET /
       routing.root do
+        routing.redirect '/auth/login' unless @current_account
         view 'home', locals: { current_account: @current_account }
       end
     end
