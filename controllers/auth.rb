@@ -10,7 +10,10 @@ module Dada
       routing.is 'login' do
         # GET /auth/login
         routing.get do
-          view :login
+          routing.redirect '/' if @current_account
+          view :login,
+               locals: { current_account: @current_account },
+               layout: { template: 'layout_login' }
         end
 
         # POST /auth/login
@@ -41,15 +44,14 @@ module Dada
       routing.on 'register' do
         routing.is do
           routing.get do
-            view :register
+            view :register,
+                 locals: { current_account: @current_account },
+                 layout: { template: 'layout_login' }
           end
 
           routing.post do
             account_data = JsonRequestBody.symbolize(routing.params)
             VerifyRegistration.new(App.config).call(account_data)
-
-            # CreateAccount.new(App.config).call(account_data)
-
             flash[:notice] = 'Please check your email verification'
             routing.redirect '/'
           rescue StandardError => error
@@ -62,10 +64,11 @@ module Dada
 
         routing.on String do |registration_token|
           routing.get do
-          new_account = SecureMessage.decrypt(registration_token)
-          view :register_confirm,
-               locals: { new_account: new_account,
-                         registration_token: registration_token }
+            new_account = SecureMessage.decrypt(registration_token)
+            view :register_confirm,
+                 locals: { new_account: new_account,
+                           registration_token: registration_token },
+                 layout: { template: 'layout_login' }
           end
         end
       end
