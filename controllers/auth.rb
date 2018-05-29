@@ -11,9 +11,9 @@ module Dada
         # GET /auth/login
         routing.get do
           routing.redirect '/' if @current_account
-          view :login,
+          view '/auth/login',
                locals: { current_account: @current_account },
-               layout: { template: 'layout_login' }
+               layout: { template: '/layout/layout_auth/main' }
         end
 
         # POST /auth/login
@@ -44,9 +44,9 @@ module Dada
       routing.on 'register' do
         routing.is do
           routing.get do
-            view :register,
+            view '/auth/register',
                  locals: { current_account: @current_account },
-                 layout: { template: 'layout_login' }
+                 layout: { template: '/layout/layout_auth/main' }
           end
 
           routing.post do
@@ -65,10 +65,10 @@ module Dada
         routing.on String do |registration_token|
           routing.get do
             new_account = SecureMessage.decrypt(registration_token)
-            view :register_confirm,
+            view '/auth/register_confirm',
                  locals: { new_account: new_account,
                            registration_token: registration_token },
-                 layout: { template: 'layout_login' }
+                 layout: { template: '/layout/layout_auth/main' }
           end
         end
       end
