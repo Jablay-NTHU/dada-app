@@ -7,7 +7,7 @@ div class="m-stack__item m-stack__item--fluid"
       div class="m-login__head"
         h3 class="m-login__title" Complete Your Registration
         hr
-        == render :flash_bar
+        == render('layout/flash_bar')
         form class="m-login__form m-form"  action='/account/#{registration_token}' method='post' id='user-form'
           div class="form-group m-form__group"
             input class="form-control m-input" id='username_input' type="text" name="username" autocomplete="off" value='#{new_account['username']}' readonly="readonly"

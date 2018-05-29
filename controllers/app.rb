@@ -6,7 +6,8 @@ require 'slim'
 module Dada
   # Base class for Dada Web Application
   class App < Roda
-    plugin :render, engine: 'slim', views: 'views'
+    plugin :render, engine: 'slim', views: 'views',
+                    layout: 'layout/layout_main/main'
     plugin :assets, css: ['style.bundle.css', 'vendors.bundle.css'],
                     path: 'assets'
     plugin :public, root: 'public'
@@ -23,8 +24,10 @@ module Dada
 
       # GET /
       routing.root do
+        registration_token = '1414r142131241421'
         routing.redirect '/auth/login' unless @current_account
-        view 'home', locals: { current_account: @current_account }
+        view '/project/home',
+             locals: { current_account: @current_account }
       end
     end
   end

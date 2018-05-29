@@ -3,9 +3,10 @@ div class="m-grid__item m-grid__item--fluid m-wrapper"
     div class="d-flex align-items-center"
       div class="mr-auto"
         h3 class="m-subheader__title " Dashboard
+        a class="m-btn m-btn--pill btn btn-danger" href="/project/create" role="button" Create New Project
   / END: Subheader					
   div class="m-content"
-    == render :flash_bar
+    == render('layout/flash_bar')
     / Begin::Section
     div class="row"
       div class="col-xl-4"

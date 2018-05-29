@@ -10,7 +10,8 @@ module Dada
         # GET /account/[username]
         routing.get String do |username|
           if @current_account && @current_account['username'] == username
-            view :account, locals: { current_account: @current_account }
+            view '/account/account',
+                 locals: { current_account: @current_account }
           else
             routing.redirect '/auth/login'
           end
@@ -40,6 +41,5 @@ module Dada
         end
       end
     end
-    # rubocop:enable Metrics/BlockLength
   end
 end
