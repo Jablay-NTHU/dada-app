@@ -46,6 +46,11 @@ html lang='en'
 								div class="m-stack__item m-topbar__nav-wrapper"
 									ul class="m-topbar__nav m-nav m-nav--inline"
 										li class="m-nav__item"
+											a href="/account/#{@current_user.username}" class="m-nav__link"
+												span class='m-nav__link'
+												span class='m-nav__link-icon'
+													i class="flaticon-user"
+										li class="m-nav__item"
 											a href="/auth/logout" class="m-nav__link"
 												span class='m-nav__link'
 												span class='m-nav__link-icon'

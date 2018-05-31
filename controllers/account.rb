@@ -9,9 +9,8 @@ module Dada
       routing.on do
         # GET /account/[username]
         routing.get String do |username|
-          if @current_account && @current_account['username'] == username
-            view '/account/account',
-                 locals: { current_account: @current_account }
+          if @current_user && @current_user.username == username
+            view '/account/account', locals: { current_user: @current_user }
           else
             routing.redirect '/auth/login'
           end

@@ -16,7 +16,8 @@ module Dada
 
     # 'vendors.bundle.js', 'scripts.bundle.js', 'dashboard.js'
     route do |routing|
-      @current_account = SecureSession.new(session).get(:current_account)
+      # @current_account = SecureSession.new(session).get(:current_account)
+      @current_user = Session.new(SecureSession.new(session)).get_user
 
       routing.public
       routing.assets
@@ -24,10 +25,17 @@ module Dada
 
       # GET /
       routing.root do
-        registration_token = '1414r142131241421'
-        routing.redirect '/auth/login' unless @current_account
-        view '/project/home',
-             locals: { current_account: @current_account }
+        if @current_user.logged_in?
+          project_list = GetAllProjects.new(App.config).call(@current_user)
+          projects = Projects.new(project_list)
+          projects.all.each do |proj|
+            puts proj.id
+          end
+          view '/project/home',
+               locals: { current_user: @current_user, projects: projects }
+        else
+          routing.redirect '/auth/login'
+        end
       end
     end
   end

@@ -10,8 +10,8 @@ module Dada
       routing.is 'create' do
         # GET /project/create
         routing.get do
-          routing.redirect '/' unless @current_account
-          view '/project/create', locals: { current_account: @current_account }
+          routing.redirect '/' unless @current_user
+          view '/project/create', locals: { current_user: @current_user }
         end
       end
     end
