@@ -26,64 +26,22 @@ div class="m-grid__item m-grid__item--fluid m-wrapper"
                   i class="la la-gear"
                 h3 class="m-portlet__head-text"
           / begin::Form
-          form class="m-form m-form--fit"
+          form class="m-form m-form--fit" action="/project/create" method="post" id="form-login"
             div class="m-portlet__body"
               div class="m-form__section m-form__section--first"
                 div class="m-form__heading"
-                  h3 class="m-form__heading-title" 1. Customer Info:
+                  h3 class="m-form__heading-title" 1. Project Info:
                 div class="form-group m-form__group"
-                  label for="example_input_full_name" Full Name:
-                  input type="email" class="form-control m-input" placeholder="Enter full name"
-                  span class="m-form__help" Please enter your full name
+                  label for="example_input_full_name" Project's Title:
+                  input type="text" name="title" id="title_input" class="form-control m-input" placeholder="Enter full name"
+                  span class="m-form__help" Please enter your project's title
                 div class="form-group m-form__group"
                   label Email address:
-                  input type="email" class="form-control m-input" placeholder="Enter email"
-                  span class="m-form__help" We will never share your email with anyone else
-                div class="form-group m-form__group"
-                  label Contact:
-                  div class="m-input-icon m-input-icon--left"
-                    input type="text" class="form-control m-input" placeholder="Phone number"
-                    span class="m-input-icon__icon m-input-icon__icon--left"
-                      span
-                        i class="la la-bell"
-                  span class="m-form__help" We will never share your email with anyone else
-                div class="m-form__group form-group"
-                  label for="" Communication:
-                  div class="m-checkbox-list"
-                    label class="m-checkbox"
-                      input type="checkbox" Email
-                      span
-                    label class="m-checkbox"
-                      input type="checkbox" SMS
-                      span
-                    label class="m-checkbox"
-                      input type="checkbox" Phone
-                      span
-              div class="m-form__seperator m-form__seperator--dashed"
-              div class="m-form__section m-form__section--last"
-                div class="m-form__heading"
-                  h3 class="m-form__heading-title" 2. Payment Info:
-                div class="m-form__group form-group"
-                  label for="" Payment Method:
-                  div class="m-radio-list"
-                    label class="m-radio"
-                      input type="radio" name="payment_methid_1"
-                      Credit Card
-                      span
-                      input type="radio" name="payment_methid_1"
-                      Bitcoin
-                      span
-                      input type="radio" name="payment_methid_1"
-                      Cash
-                      span
-                  span class="m-form__help" Please select payment method
-                div class="form-group m-form__group m-form__group--last"
-                  label for="example_input_full_name" Amount:
-                  input type="email" class="form-control m-input" placeholder="Enter full name"
-                  span class="m-form__help" Please enter payment amount
+                  input type="text" name="description" id="description_input" class="form-control m-input" placeholder="Enter email"
+                  span class="m-form__help" Please add the brief description of the proejct
             div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit"
               div class="m-form__actions m-form__actions--solid"
-                button type="reset" class="btn btn-success" Submit
+                button type="submit" value="Submit" id='m_create_project_submit'  class="btn btn-success" Submit
                 button type="reset" class="btn btn-secondary" Cancel
           / End::Form
         / End::Portlet
