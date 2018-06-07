@@ -3,21 +3,21 @@
 require 'http'
 
 # Returns an authenticated user, or nil
-class CreateAccount
+class CreateProject
   # Error for inability of API to create account
-  class InvalidAccount < StandardError
+  class InvalidProject < StandardError
     def message
-      'This account can no longer be created: please start again'
+      'This project cannot be created: please try again'
     end
   end
   def initialize(config)
     @config = config
   end
 
-  def call(account_data)
+  def call(project_data)
     response = HTTP.post(
-      "#{@config.API_URL}/accounts/",
-      json: account_data
+      "#{@config.API_URL}/project/",
+      json: project_data
     )
 
     raise InvalidAccount unless response.code == 201
