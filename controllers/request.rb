@@ -6,21 +6,20 @@ module Dada
   # Web controller for Dada API
   class App < Roda
     route('request') do |routing|
-      # GET /request/list
-      routing.on 'list' do
-        routing.on String do |proj_id|
-          routing.get do
-            routing.redirect '/' unless @current_user
-            view '/request/list', locals: { current_user: @current_user }
+      routing.on do
+        # GET /documents/
+        routing.get(String) do |doc_id|
+          if @current_user.logged_in?
+            doc_info = GetRequest.new(App.config)
+                                 .call(@current_user, doc_id)
+            # puts "DOC: #{doc_info}"
+            request = Request.new(doc_info)
+
+            view '/request/list',
+            locals: { current_user: @current_user, request: request }
+          else
+            routing.redirect '/auth/login'
           end
-        end
-      end
-      # @login_route = '/project/create'
-      routing.is 'create' do
-        # GET /request/create
-        routing.get do
-          routing.redirect '/' unless @current_user
-          view '/request/create', locals: { current_user: @current_user }
         end
       end
     end

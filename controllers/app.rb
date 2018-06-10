@@ -31,7 +31,7 @@ module Dada
           projects.all.each do |proj|
             puts proj.id
           end
-          view '/project/home',
+          view '/project/list',
                locals: { current_user: @current_user, projects: projects }
         else
           routing.redirect '/auth/login'
