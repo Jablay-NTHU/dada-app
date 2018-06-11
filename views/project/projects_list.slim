@@ -3,7 +3,7 @@ div class="m-grid__item m-grid__item--fluid m-wrapper"
     div class="d-flex align-items-center"
       div class="mr-auto"
         h3 class="m-subheader__title " All Projects
-        a class="m-btn m-btn--pill btn btn-danger" href="#" role="button" data-toggle="modal" data-target="#m_modal_4" Create New Project
+        a class="m-btn m-btn--pill btn btn-danger" href="#" role="button" data-toggle="modal" data-target="#modal-new-project" Create New Project
   / END: Subheader					
   div class="m-content"
     == render('layout/flash_bar')
@@ -31,17 +31,24 @@ div class="m-grid__item m-grid__item--fluid m-wrapper"
                               li class="m-nav__section m-nav__section--first"
                                 span class="m-nav__section-text" Quick Actions
                               li class="m-nav__item"
-                                a href="" class="m-nav__link"
-                                  i class="m-nav__link-icon flaticon-share"
-                                  span class="m-nav__link-text" Share
-                              li class="m-nav__item"
-                                a href="" class="m-nav__link"
-                                  i class="m-nav__link-icon flaticon-edit-1"
-                                  span class="m-nav__link-text" Edit
-                              li class="m-nav__item"
-                                a href="" class="m-nav__link"
-                                  i class="m-nav__link-icon flaticon-delete-1"
-                                  span class="m-nav__link-text" Delete
+                                a href="#" role="button" class="m-nav__link" data-toggle="modal" data-target="#modal-manage-collaborators"
+                                  i class="m-nav__link-icon flaticon-users"
+                                  span class="m-nav__link-text" Collaborators
+                              - if proj.policies.can_edit
+                                li class="m-nav__item"
+                                  a href="#" role="button" class="m-nav__link" data-toggle="modal" data-target="#modal-edit-project"
+                                    i class="m-nav__link-icon flaticon-edit-1"
+                                    span class="m-nav__link-text" Edit
+                              - if proj.policies.can_delete
+                                li class="m-nav__item"
+                                  a href="#" role="button" class="m-nav__link" data-toggle="modal" data-target="#modal-delete-project"
+                                    i class="m-nav__link-icon flaticon-delete-1"
+                                    span class="m-nav__link-text" Delete
+                              - if proj.policies.can_leave
+                                li class="m-nav__item"
+                                  a href="#" role="button" class="m-nav__link" data-toggle="modal" data-target="#modal-leave-project"
+                                    i class="m-nav__link-icon flaticon-logout"
+                                    span class="m-nav__link-text" Leave
                               / li class="m-nav__separator m-nav__separator--fit"
                               / li class="m-nav__item"
                                 / a href="#" class="btn btn-outline-danger m-btn m-btn--pill m-btn--wide btn-sm" Cancel
@@ -61,23 +68,73 @@ div class="m-grid__item m-grid__item--fluid m-wrapper"
               / end::Widget 7
           / end:: Widgets/Announcements 1
       / End::Section
-      / begin::Modal
-      div class="modal fade" id="m_modal_4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+      / begin::Modal::NewProject
+      div class="modal fade" id="modal-new-project" tabindex="-1" role="dialog" aria-labelledby="newProjectModal" aria-hidden="true"
         div class="modal-dialog modal-lg" role="document"
           div class="modal-content"
             div class="modal-header"
-              h5 class="modal-title" id="exampleModalLabel" New message
+              h5 class="modal-title" id="exampleModalLabel" New Project
               button type="button" class="close" data-dismiss="modal" aria-label="Close"
                 span aria-hidden="true" &times;
             div class="modal-body"
-              form
-                div class="form-group"
-                  label for="recipient-name" class="form-control-label" Recipient:
-                  input type="text" class="form-control" id="recipient-name"
-                div class="form-group"
-                  label for="message-text" class="form-control-label" Message:
-                  textarea class="form-control" id="message-text"
+              form action="/project/create" method="post" id="form-login"
+                div class="form-group m-form__group"
+                  label for="recipient-name" class="form-control-label" Title:
+                  input type="text" name="title" id="title_input" class="form-control m-input" placeholder="Please Enter Your Project's title"
+                div class="form-group m-form__group"
+                  label for="message-text" class="form-control-label" Description:
+                  input type="text" name="description" id="description_input" class="form-control m-input" placeholder="Please Enter the Descriptions of Your Project"
             div class="modal-footer"
               button type="button" class="btn btn-secondary" data-dismiss="modal" Close
-              button type="button" class="btn btn-primary" Send message
+              button type="submit" value="Submit" id='m_create_project_submit'  class="btn btn-success" Submit
       / end::Modal
+      / begin::Modal::EditProject
+      div class="modal fade" id="modal-edit-project" tabindex="-1" role="dialog" aria-labelledby="editProjectModal" aria-hidden="true"
+        div class="modal-dialog modal-lg" role="document"
+          div class="modal-content"
+            div class="modal-header"
+              h5 class="modal-title" id="exampleModalLabel" Edit Project
+              button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                span aria-hidden="true" &times;
+            div class="modal-body"
+              form action="/project/edit" method="post" id="form-login"
+                div class="form-group m-form__group"
+                  label for="recipient-name" class="form-control-label" Title:
+                  input type="text" name="title" id="title_input" class="form-control m-input" placeholder="Please Enter Your Project's title"
+                div class="form-group m-form__group"
+                  label for="message-text" class="form-control-label" Description:
+                  input type="text" name="description" id="description_input" class="form-control m-input" placeholder="Please Enter the Descriptions of Your Project"
+            div class="modal-footer"
+              button type="button" class="btn btn-secondary" data-dismiss="modal" Close
+              button type="submit" value="Submit" id='m_create_project_submit'  class="btn btn-success" Save Change
+      / end::Modal
+      / begin::Modal::DeleteProject
+      div class="modal fade" id="modal-delete-project" tabindex="-1" role="dialog" aria-labelledby="deleteProjectModal" aria-hidden="true"
+        div class="modal-dialog modal-lg" role="document"
+          div class="modal-content"
+            div class="modal-header"
+              h5 class="modal-title" id="exampleModalLabel" Delete Project Confirmation
+              button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                span aria-hidden="true" &times;
+            div class="modal-body"
+              form action="/project/edit" method="post" id="form-login"
+                p Are you sure you want to delete this project? Your cannot undo your action once you decide to proceed with it!
+            div class="modal-footer"
+              button type="button" class="btn btn-secondary" data-dismiss="modal" Close
+              button type="submit" value="Submit" id='m_create_project_submit'  class="btn btn-danger" Yes, Please Delete!
+      / end::Modal
+      / begin::Modal::LeaveProject
+      div class="modal fade" id="modal-leave-project" tabindex="-1" role="dialog" aria-labelledby="leaveProjectModal" aria-hidden="true"
+        div class="modal-dialog modal-lg" role="document"
+          div class="modal-content"
+            div class="modal-header"
+              h5 class="modal-title" id="exampleModalLabel" Leave Project Confirmation
+              button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                span aria-hidden="true" &times;
+            div class="modal-body"
+              form action="/project/edit" method="post" id="form-login"
+                p Are you sure you want to leave from this project? Your cannot undo your action once you decide to proceed with it!
+            div class="modal-footer"
+              button type="button" class="btn btn-secondary" data-dismiss="modal" Close
+              button type="submit" value="Submit" id='m_create_project_submit'  class="btn btn-danger" Yes, I want to leave!
+      / end::Modal      
