@@ -7,7 +7,18 @@ module Dada
   class App < Roda
     route('request') do |routing|
       routing.on do
-        # GET /requests/
+        @request_route = '/request/create'
+        routing.is 'create' do
+          # GET /project/create
+          routing.get do
+            routing.redirect '/' unless @current_user
+            view '/request/new_request',
+                 locals: { current_user: @current_user },
+                 layout_opts: { locals: { projects: @projects } }
+          end
+        end
+
+        # GET /requests/[req_id]
         routing.get(String) do |req_id|
           if @current_user.logged_in?
             req_info = GetRequest.new(App.config)

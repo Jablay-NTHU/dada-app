@@ -13,8 +13,6 @@ div class="m-grid__item m-grid__item--fluid m-wrapper"
               span class="m-nav__link-text" Create New Request
   / END: Subheader					
   div class="m-content"
-    == render('layout/flash_bar')
-    / Begin::Section
     div class="row"
       div class="col-lg-12"
         / begin::Portlet
@@ -24,67 +22,56 @@ div class="m-grid__item m-grid__item--fluid m-wrapper"
               div class="m-portlet__head-title"
                 span class="m-portlet__head-icon m--hide"
                   i class="la la-gear"
-                h3 class="m-portlet__head-text"
+                h3 class="m-portlet__head-text" 2 Columns Form Layout
           / begin::Form
-          form class="m-form m-form--fit"
+          form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed"
             div class="m-portlet__body"
-              div class="m-form__section m-form__section--first"
-                div class="m-form__heading"
-                  h3 class="m-form__heading-title" 1. Customer Info:
-                div class="form-group m-form__group"
-                  label for="example_input_full_name" Full Name:
+              div class="form-group m-form__group row"
+                div class="col-lg-6"
+                  label Full Name:
                   input type="email" class="form-control m-input" placeholder="Enter full name"
                   span class="m-form__help" Please enter your full name
-                div class="form-group m-form__group"
-                  label Email address:
-                  input type="email" class="form-control m-input" placeholder="Enter email"
-                  span class="m-form__help" We will never share your email with anyone else
-                div class="form-group m-form__group"
-                  label Contact:
-                  div class="m-input-icon m-input-icon--left"
-                    input type="text" class="form-control m-input" placeholder="Phone number"
-                    span class="m-input-icon__icon m-input-icon__icon--left"
+                div class="col-lg-6"
+                  label class="" Contact Number:
+                  input type="email" class="form-control m-input" placeholder="Enter contact number"
+                  span class="m-form__help" Please enter your contact number
+              div class="form-group m-form__group row"
+                div class="col-lg-6"
+                  label Address:
+                  div class="m-input-icon m-input-icon--right"
+                    input type="text" class="form-control m-input" placeholder="Enter your address"
+                    span class="m-input-icon__icon m-input-icon__icon--right"
                       span
-                        i class="la la-bell"
-                  span class="m-form__help" We will never share your email with anyone else
-                div class="m-form__group form-group"
-                  label for="" Communication:
-                  div class="m-checkbox-list"
-                    label class="m-checkbox"
-                      input type="checkbox" Email
+                        i class="la la-map-marker"
+                  span class="m-form__help" Please enter your address
+                div class="col-lg-6"
+                  label class="" Postcode:
+                  div class="m-input-icon m-input-icon--right"
+                    input type="text" class="form-control m-input" placeholder="Enter your postcode"
+                    span class="m-input-icon__icon m-input-icon__icon--right"
                       span
-                    label class="m-checkbox"
-                      input type="checkbox" SMS
+                        i class="la la-bookmark-o"
+                  span class="m-form__help" Please enter your postcode
+              div class="form-group m-form__group row"
+                div class="col-lg-6"
+                  label User Group:
+                  div class="m-radio-inline"
+                    label class="m-radio m-radio--solid"
+                      input type="radio" name="example_2" value="1" Sales Person
                       span
-                    label class="m-checkbox"
-                      input type="checkbox" Phone
+                    label class="m-radio m-radio--solid"
+                      input type="radio" name="example_2" value="2" Customer
                       span
-              div class="m-form__seperator m-form__seperator--dashed"
-              div class="m-form__section m-form__section--last"
-                div class="m-form__heading"
-                  h3 class="m-form__heading-title" 2. Payment Info:
-                div class="m-form__group form-group"
-                  label for="" Payment Method:
-                  div class="m-radio-list"
-                    label class="m-radio"
-                      input type="radio" name="payment_methid_1"
-                      Credit Card
-                      span
-                      input type="radio" name="payment_methid_1"
-                      Bitcoin
-                      span
-                      input type="radio" name="payment_methid_1"
-                      Cash
-                      span
-                  span class="m-form__help" Please select payment method
-                div class="form-group m-form__group m-form__group--last"
-                  label for="example_input_full_name" Amount:
-                  input type="email" class="form-control m-input" placeholder="Enter full name"
-                  span class="m-form__help" Please enter payment amount
+                  span class="m-form__help"
+                    Please select user group
             div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit"
               div class="m-form__actions m-form__actions--solid"
-                button type="reset" class="btn btn-success" Submit
-                button type="reset" class="btn btn-secondary" Cancel
-          / End::Form
-        / End::Portlet
-    / End::Section
+                div class="row"
+                  div class="col-lg-6"
+                    button type="reset" class="btn btn-primary" Save
+                    button type="reset" class="btn btn-secondary" Cancel
+                  div class="col-lg-6 m--align-right"
+                    button type="reset" class="btn btn-danger" Delete
+          / end::Form
+        /div
+        /end::Portlet

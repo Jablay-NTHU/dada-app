@@ -3,7 +3,7 @@ div class="m-grid__item m-grid__item--fluid m-wrapper"
     div class="d-flex align-items-center"
       div class="mr-auto"
         h3 class="m-subheader__title " All Projects
-        a class="m-btn m-btn--pill btn btn-danger" href="/project/create" role="button" Create New Project
+        a class="m-btn m-btn--pill btn btn-danger" href="#" role="button" data-toggle="modal" data-target="#m_modal_4" Create New Project
   / END: Subheader					
   div class="m-content"
     == render('layout/flash_bar')
@@ -61,3 +61,23 @@ div class="m-grid__item m-grid__item--fluid m-wrapper"
               / end::Widget 7
           / end:: Widgets/Announcements 1
       / End::Section
+      / begin::Modal
+      div class="modal fade" id="m_modal_4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+        div class="modal-dialog modal-lg" role="document"
+          div class="modal-content"
+            div class="modal-header"
+              h5 class="modal-title" id="exampleModalLabel" New message
+              button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                span aria-hidden="true" &times;
+            div class="modal-body"
+              form
+                div class="form-group"
+                  label for="recipient-name" class="form-control-label" Recipient:
+                  input type="text" class="form-control" id="recipient-name"
+                div class="form-group"
+                  label for="message-text" class="form-control-label" Message:
+                  textarea class="form-control" id="message-text"
+            div class="modal-footer"
+              button type="button" class="btn btn-secondary" data-dismiss="modal" Close
+              button type="button" class="btn btn-primary" Send message
+      / end::Modal
