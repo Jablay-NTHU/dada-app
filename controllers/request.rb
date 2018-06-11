@@ -7,16 +7,16 @@ module Dada
   class App < Roda
     route('request') do |routing|
       routing.on do
-        # GET /documents/
+        # GET /requests/
         routing.get(String) do |doc_id|
           if @current_user.logged_in?
-            doc_info = GetRequest.new(App.config)
+            req_info = GetRequest.new(App.config)
                                  .call(@current_user, doc_id)
-            # puts "DOC: #{doc_info}"
-            request = Request.new(doc_info)
-
-            view '/request/list',
-            locals: { current_user: @current_user, request: request }
+            # puts "REQ: #{req_info}"
+            request = Request.new(req_info)
+            view '/request/request_detail',
+                 locals: { current_user: @current_user, request: request },
+                 layout_opts: { locals: { projects: @projects } }
           else
             routing.redirect '/auth/login'
           end

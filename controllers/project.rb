@@ -11,10 +11,11 @@ module Dada
           # GET /projects/
           routing.get do
             if @current_user.logged_in?
-              project_list = GetAllProjects.new(App.config).call(@current_user)
-              projects = Projects.new(project_list)
-              view '/project/list',
-                   locals: { current_user: @current_user, projects: projects }
+              # project_list = GetAllProjects.new(App.config).call(@current_user)
+              # projects = Projects.new(project_list)
+              view '/project/projects_list',
+                   locals: { current_user: @current_user, projects: projects },
+                   layout_opts: { locals: { projects: @projects } }
             else
               routing.redirect '/auth/login'
             end
@@ -26,7 +27,9 @@ module Dada
           # GET /project/create
           routing.get do
             routing.redirect '/' unless @current_user
-            view '/project/create', locals: { current_user: @current_user }
+            view '/project/new_project',
+                 locals: { current_user: @current_user },
+                 layout_opts: { locals: { projects: @projects } }
           end
         end
 
@@ -35,8 +38,9 @@ module Dada
           if @current_user.logged_in?
             proj_info = GetProject.new(App.config).call(@current_user, proj_id)
             project = Project.new(proj_info)
-            view '/project/detail',
-                 locals: { current_user: @current_user, project: project }
+            view '/project/project_detail',
+                 locals: { current_user: @current_user, project: project },
+                 layout_opts: { locals: { projects: @projects } }
           else
             routing.redirect '/auth/login'
           end
