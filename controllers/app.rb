@@ -16,7 +16,6 @@ module Dada
 
     # 'vendors.bundle.js', 'scripts.bundle.js', 'dashboard.js'
     route do |routing|
-      # @current_account = SecureSession.new(session).get(:current_account)
       @current_user = Session.new(SecureSession.new(session)).get_user
 
       if @current_user.logged_in?
