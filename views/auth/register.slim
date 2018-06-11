@@ -10,9 +10,15 @@ div class="m-stack__item m-stack__item--fluid"
         == render('layout/flash_bar')
         form class="m-login__form m-form"  action='/auth/register' method='post' id='register-form'
           div class="form-group m-form__group"
-            input class="form-control m-input" type="text" placeholder="Username" name="username" autocomplete="off" id='username_input'
+            - if flash[:params]
+              input class="form-control m-input" type="text" placeholder="Username" name="username" autocomplete="off" id='username_input' value="#{flash[:params]['username']}"
+            - else
+              input class="form-control m-input" type="text" placeholder="Username" name="username" autocomplete="off" id='username_input'
           div class="form-group m-form__group"
-            input class="form-control m-input m-login__form-input--last" type="text" placeholder="Email" name="email"
+            - if flash[:params]
+              input class="form-control m-input m-login__form-input--last" type="text" placeholder="Email" name="email" value="#{flash[:params]['email']}"
+            - else
+              input class="form-control m-input m-login__form-input--last" type="text" placeholder="Email" name="email"
           div class="m-login__form-action"
             button type='submit' id='m_login_signin_submit' value='submit' class='btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air' Submit
 div class="m-stack__item m-stack__item--center" 

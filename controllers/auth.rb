@@ -21,6 +21,7 @@ module Dada
           # authenticated = AuthenticateAccount.new(App.config).call(
           #   JsonRequestBody.symbolize(routing.params)
           # )
+          flash[:params] = routing.params
 
           credentials = Form::LoginCredentials.call(routing.params)
           if credentials.failure?
@@ -67,6 +68,8 @@ module Dada
 
           # POST /auth/register
           routing.post do
+            flash[:params] = routing.params
+
             account_data = JsonRequestBody.symbolize(routing.params)
             VerifyRegistration.new(App.config).call(account_data)
 
