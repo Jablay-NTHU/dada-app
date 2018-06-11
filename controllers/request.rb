@@ -8,10 +8,13 @@ module Dada
     route('request') do |routing|
       routing.on do
         # GET /requests/
-        routing.get(String) do |doc_id|
+        routing.get(String) do |req_id|
           if @current_user.logged_in?
             req_info = GetRequest.new(App.config)
-                                 .call(@current_user, doc_id)
+                                 .call(@current_user, req_id)
+
+            routing.redirect '/error/404' if req_info.nil?
+
             # puts "REQ: #{req_info}"
             request = Request.new(req_info)
             view '/request/request_detail',

@@ -37,6 +37,9 @@ module Dada
         routing.get(String) do |proj_id|
           if @current_user.logged_in?
             proj_info = GetProject.new(App.config).call(@current_user, proj_id)
+
+            routing.redirect '/error/404' if proj_info.nil?
+
             project = Project.new(proj_info)
             view '/project/project_detail',
                  locals: { current_user: @current_user, project: project },
