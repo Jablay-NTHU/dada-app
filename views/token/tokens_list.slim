@@ -4,9 +4,9 @@ div class="m-grid__item m-grid__item--fluid m-wrapper"
       div class="mr-auto"
         h3 class="m-subheader__title m-subheader__title" Manage My Tokens
       div
-        a class="m-btn--align-right m-btn--pill btn btn-danger" href="/token/create" role="button"
+        a class="m-btn--align-right m-btn--pill btn btn-danger" href="#" role="button" data-toggle="modal" data-target="#modal-new-token"
           i class="m-btn-icon flaticon-file-1"
-          span class="m-btn-text" &nbsp Create New Token
+          span class="m-btn-text" &nbsp New Token
       span &nbsp;&nbsp;
   / END: Subheader					
   div class="m-content"
@@ -23,7 +23,7 @@ div class="m-grid__item m-grid__item--fluid m-wrapper"
             / begin::Section
             div class="m-section"
               div class="m-section__content"
-                table class="table table-striped m-table"
+                table id="token-table" class="table table-striped m-table"
                   thead
                     tr
                       th Name
@@ -32,14 +32,17 @@ div class="m-grid__item m-grid__item--fluid m-wrapper"
                       th Action
                   tbody
                     - tokens.all.each do |token|
-                      tr
-                        td 
-                          a href="/request/#{token.id}" == "#{token.name}"
-                        td #{token.value}
-                        td #{token.description}
-                        td
-                          a href="/"
-                            i class="flaticon-edit-1" data-container="body" data-toggle="m-tooltip" data-placement="bottom" title="Edit"   
-                          span &nbsp;&nbsp;          
-                          a href="/"
-                            i class="flaticon-delete-1" data-container="body" data-toggle="m-tooltip" data-placement="bottom" title="Remove"                        
+                      tr id="row-#{token.id}"
+                        input class="token-id" type="hidden" value="#{token.id}"
+                        td class="token-name" style="width:20%" == "#{token.name}"
+                        td class="token-value" style="width:30%" == "#{token.value}"
+                        td class="token-description" style="width:40%" == "#{token.description}"
+                        td style="width:10%"
+                          a href="#" class="edit-token" role="button" data-toggle="modal" data-target="#modal-edit-token"   
+                            i class="flaticon-edit-1"
+                          span &nbsp;&nbsp;
+                          a href="#" class="delete-token" role="button" data-toggle="modal" data-target="#modal-delete-token"  
+                            i class="flaticon-delete-1"                    
+    include :modal_new_token
+    include :modal_edit_token
+    include :modal_delete_token
