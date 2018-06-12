@@ -107,22 +107,33 @@ div class="m-grid__item m-grid__item--fluid m-wrapper"
             / begin::Section
             div class="m-section"
               div class="m-section__content"
+                / div class="row"
+                /   div class="col-lg-12"
+                /     - if project.policies.can_add_collaborators
+                /       a class="m-btn--align-right m-btn--pill btn btn-danger" href="#" role="button"
+                /         i class="m-btn-icon flaticon-file-1" 
+                /         span &nbsp; New Collaborator
                 div class="row"
-                  - if project.policies.can_add_collaborators
-                    a class="m-btn--align-right m-btn--pill btn btn-danger" href="#" role="button"
-                      i class="m-btn-icon flaticon-file-1" 
-                      span &nbsp; New Collaborator             
+                  div class="col-lg-12"
+                    div class="form-group m-form__group row"
+                      label class="col-form-label col-lg-2 col-sm-12" Add Collaborator
+                      div class="col-lg-4 col-md-9 col-sm-12"
+                        div class="m-typeahead"
+                          input class="form-control m-input" id="m_typeahead_1" type="text" placeholder="States of USA"
+                      div class="col-lg-4 col-md-9 col-sm-12"
+                        a class="m-btn btn btn-danger" href="#" role="button" id="add-collaborator"
+                          span Add
                 table class="table table-striped m-table"
                   thead
                     tr
                       th Username
                       th Email Address
                       th Action
-                  - project.collaborators.each do |collaborator|
-                    tbody
+                  tbody
+                    - project.collaborators.each do |collaborator|
                       tr
-                        td #{collaborator.username}
-                        td #{collaborator.email}
+                        td == "#{collaborator.username}"
+                        td == "#{collaborator.email}"
                         td
                           - if project.policies.can_remove_collaborators
                             a href="/" 
