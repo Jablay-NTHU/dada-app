@@ -13,7 +13,7 @@ module Dada
             if @current_user.logged_in?
               # project_list = GetAllProjects.new(App.config).call(@current_user)
               # projects = Projects.new(project_list)
-              view '/project/projects_list',
+              view '/project/projects_list/projects_list',
                    locals: { current_user: @current_user, projects: projects },
                    layout_opts: { locals: { projects: @projects } }
             else
@@ -41,7 +41,7 @@ module Dada
             routing.redirect '/error/404' if proj_info.nil?
 
             project = Project.new(proj_info)
-            view '/project/project_detail',
+            view '/project/project_detail/project_detail',
                  locals: { current_user: @current_user, project: project },
                  layout_opts: { locals: { projects: @projects } }
           else

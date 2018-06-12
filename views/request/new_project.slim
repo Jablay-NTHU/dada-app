@@ -1,0 +1,48 @@
+div class="m-grid__item m-grid__item--fluid m-wrapper"
+  div class="m-subheader "
+    div class="d-flex align-items-center"
+      div class="mr-auto"
+        h3 class="m-subheader__title " Create New Project
+        ul class="m-subheader__breadcrumbs m-nav m-nav--inline"
+          li class="m-nav__item m-nav__item--home"
+            a href="/" class="m-nav__link m-nav__link--icon"
+              i class="m-nav__link-icon la la-home"
+          li class="m-nav__separator" -
+          li class="m-nav__item"
+            a href="/project/create" class="m-nav__link"
+              span class="m-nav__link-text" Create New Project
+  / END: Subheader					
+  div class="m-content"
+    == render('layout/flash_bar')
+    / Begin::Section
+    div class="row"
+      div class="col-lg-12"
+        / begin::Portlet
+        div class="m-portlet"
+          div class="m-portlet__head"
+            div class="m-portlet__head-caption"
+              div class="m-portlet__head-title"
+                span class="m-portlet__head-icon m--hide"
+                  i class="la la-gear"
+                h3 class="m-portlet__head-text"
+          / begin::Form
+          form class="m-form m-form--fit" action="/project/create" method="post" id="form-login"
+            div class="m-portlet__body"
+              div class="m-form__section m-form__section--first"
+                div class="m-form__heading"
+                  h3 class="m-form__heading-title" 1. Project Info:
+                div class="form-group m-form__group"
+                  label for="example_input_full_name" Project's Title:
+                  input type="text" name="title" id="title_input" class="form-control m-input" placeholder="Enter full name"
+                  span class="m-form__help" Please enter your project's title
+                div class="form-group m-form__group"
+                  label Email address:
+                  input type="text" name="description" id="description_input" class="form-control m-input" placeholder="Enter email"
+                  span class="m-form__help" Please add the brief description of the project
+            div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit"
+              div class="m-form__actions m-form__actions--solid"
+                button type="submit" value="Submit" id='m_create_project_submit'  class="btn btn-success" Submit
+                button type="reset" class="btn btn-secondary" Cancel
+          / End::Form
+        / End::Portlet
+    / End::Section
