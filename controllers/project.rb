@@ -13,8 +13,8 @@ module Dada
             if @current_user.logged_in?
               # project_list = GetAllProjects.new(App.config).call(@current_user)
               # projects = Projects.new(project_list)
-              view '/project/projects_list/projects_list',
-                   locals: { current_user: @current_user, projects: projects },
+              view '/project/project_list/project_list',
+                   locals: { current_user: @current_user, projects: @projects },
                    layout_opts: { locals: { projects: @projects } }
             else
               routing.redirect '/auth/login'
