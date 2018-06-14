@@ -1,0 +1,113 @@
+div class="m-grid__item m-grid__item--fluid m-wrapper"
+  div class="m-subheader "
+    div class="d-flex align-items-center"
+      div class="mr-auto"
+        h3 class="m-subheader__title " Create New Request
+        ul class="m-subheader__breadcrumbs m-nav m-nav--inline"
+          li class="m-nav__item m-nav__item--home"
+            a href="/" class="m-nav__link m-nav__link--icon"
+              i class="m-nav__link-icon la la-home"
+          li class="m-nav__separator" -
+          li class="m-nav__item"
+            a href="/project/create" class="m-nav__link"
+              span class="m-nav__link-text" Create New Request
+  / END: Subheader					
+  div class="m-content"
+    form class="m-form m-form--fit" action="/request/create" method="post" id="form-request-create"
+      div class="row"
+        div class="col-lg-6"
+          / begin::Portlet
+          div class="m-portlet"
+            div class="m-portlet__head"
+              div class="m-portlet__head-caption"
+                div class="m-portlet__head-title"
+                  span class="m-portlet__head-icon m--hide"
+                    i class="la la-gear"
+                  h3 class="m-portlet__head-text" New API Request Form
+            / begin::Form
+            div class="m-portlet__body"
+              div class="m-form__section m-form__section--first"
+                div class="m-form__heading"
+                  h3 class="m-form__heading-title" 1. Request Info:
+                div class="form-group m-form__group"
+                  label for="request-input-title" Request's Title:
+                  input type="text" name="title" id="new_request_title_input" class="form-control m-input" placeholder="Enter Request's Title"
+                  span class="m-form__help" Please enter your API Request's title
+                div class="form-group m-form__group"
+                  label Request's Description:
+                  input type="text" name="description" id="new_request_desc_input" class="form-control m-input" placeholder="Enter Request's Description"
+                  span class="m-form__help" Please enter your API Request's description
+                div class="form-group m-form__group"
+                  label API URL:
+                  input type="text" name="api_url" id="new_request_url_input" class="form-control m-input" placeholder="Enter API URL of the Request"
+                  span class="m-form__help" Please enter your API Request's URL
+                div class="form-group m-form__group"
+                  label Parameters: &nbsp;&nbsp;
+                  a href="#" role="button" class="m-nav__link" id="add-parameter-row"
+                    i class="m-nav__link-icon flaticon-plus"                  
+                    span &nbsp;&nbsp; Add parameters
+                  table id="header-table" class="table table-striped m-table" style="width:100%" 
+                    thead 
+                      tr
+                        th style="width:45%" Key
+                        th style="width:45%" Value
+                        th style="width:10%" 
+                    tbody
+                      tr
+                        td 
+                          input type="text" name="header-key[]" class="form-control m-input header-key" placeholder="Key"                
+                        td
+                          input type="text" name="header-value[]" class="form-control m-input header-value" placeholder="Value"   
+                        td
+                          a href="#" role="button" class="m-nav__link remove-header"
+                            i class="m-nav__link-icon flaticon-delete-1"
+              div class="m-form__section m-form__section--second"
+                div class="m-form__heading"
+                  h3 class="m-form__heading-title" 2. Request Scheduled Info:
+                div class="form-group m-form__group"
+                  label for="" API Request's Interval
+                  div class="m-radio-inline"
+                    label class="m-radio"
+                      input type="radio" id="int-once" class="interval" name="example_3" value="Once" checked="checked" Once
+                      span
+                    label class="m-radio"
+                      input type="radio" id="int-daily" class="interval" name="example_3" value="Daily" Daily
+                      span
+                    label class="m-radio"
+                      input type="radio" id="int-weekly" class="interval" name="example_3" value="Weekly" Weekly
+                      span
+                    label class="m-radio"
+                      input type="radio" id="id-monthly" class="interval" name="example_3" value="Monthly" Monthly
+                      span
+                  span class="m-form__help" For scheduled request, we will run on 00.01 Taiwan Time
+                div class="form-group m-form__group" id="date-start-div" style="display:none"
+                  label for="example-date-input" Date start
+                  input class="form-control m-input" type="date" value="2018-06-12" id="date-start-input"
+                div class="form-group m-form__group" id="date-end-div" style="display:none"
+                  label for="example-date-input" Date end
+                  input class="form-control m-input" type="date" value="2018-06-12" id="date-end-input"
+            div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit"
+              div class="m-form__actions m-form__actions--solid"
+                button type="submit" value="Submit" id='try-launch' class="btn btn-success" Send Request
+                button type="reset" class="btn btn-secondary" Cancel
+            / end::Form
+          /div        
+          /end::Portlet
+        div class="col-lg-6" id="preview-col" style="display:none"
+          / begin::Portlet
+          div class="m-portlet"
+            div class="m-portlet__head"
+              div class="m-portlet__head-caption"
+                div class="m-portlet__head-title"
+                  span class="m-portlet__head-icon m--hide"
+                    i class="la la-gear"
+                  h3 class="m-portlet__head-text" API Request Preview
+            / begin::Form
+            div class="m-portlet__body"
+              div class="m-form__section m-form__section--first"
+                div class="form-group m-form__group"
+                  textarea name="request" id="api-result" rows="25" class="form-control m-input"
+            div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit"
+              div class="m-form__actions m-form__actions--solid"
+                button type="submit" value="Submit" id='m_create_project_submit'  class="btn btn-success" Save Request
+                button type="reset" class="btn btn-secondary" Cancel

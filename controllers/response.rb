@@ -11,16 +11,18 @@ module Dada
         routing.on String do |req_id|
           routing.get do
             routing.redirect '/' unless @current_user
-            view '/response/list', locals: { current_user: @current_user }
+            view '/response/response_detail', 
+                 locals: { current_user: @current_user }
           end
         end
       end
-      # @login_route = '/project/create'
+
       routing.is 'export' do
         # GET /request/create
         routing.get do
           routing.redirect '/' unless @current_user
-          view '/response/export', locals: { current_user: @current_user }
+          view '/response/response_export', 
+               locals: { current_user: @current_user }
         end
       end
     end

@@ -2,8 +2,8 @@ div class="m-grid__item m-grid__item--fluid m-wrapper"
   div class="m-subheader "
     div class="d-flex align-items-center"
       div class="mr-auto"
-        h3 class="m-subheader__title " Dashboard
-        a class="m-btn m-btn--pill btn btn-danger" href="/project/create" role="button" Create New Project
+        h3 class="m-subheader__title " All Projects
+        a class="m-btn m-btn--pill btn btn-danger" href="#" role="button" data-toggle="modal" data-target="#modal-new-project" Create New Project
   / END: Subheader					
   div class="m-content"
     == render('layout/flash_bar')
@@ -31,17 +31,24 @@ div class="m-grid__item m-grid__item--fluid m-wrapper"
                               li class="m-nav__section m-nav__section--first"
                                 span class="m-nav__section-text" Quick Actions
                               li class="m-nav__item"
-                                a href="" class="m-nav__link"
-                                  i class="m-nav__link-icon flaticon-share"
-                                  span class="m-nav__link-text" Share
-                              li class="m-nav__item"
-                                a href="" class="m-nav__link"
-                                  i class="m-nav__link-icon flaticon-edit-1"
-                                  span class="m-nav__link-text" Edit
-                              li class="m-nav__item"
-                                a href="" class="m-nav__link"
-                                  i class="m-nav__link-icon flaticon-delete-1"
-                                  span class="m-nav__link-text" Delete
+                                a href="#" role="button" class="m-nav__link" data-toggle="modal" data-target="#modal-manage-collaborators"
+                                  i class="m-nav__link-icon flaticon-users"
+                                  span class="m-nav__link-text" Collaborators
+                              - if proj.policies.can_edit
+                                li class="m-nav__item"
+                                  a href="#" role="button" class="m-nav__link" data-toggle="modal" data-target="#modal-edit-project"
+                                    i class="m-nav__link-icon flaticon-edit-1"
+                                    span class="m-nav__link-text" Edit
+                              - if proj.policies.can_delete
+                                li class="m-nav__item"
+                                  a href="#" role="button" class="m-nav__link" data-toggle="modal" data-target="#modal-delete-project"
+                                    i class="m-nav__link-icon flaticon-delete-1"
+                                    span class="m-nav__link-text" Delete
+                              - if proj.policies.can_leave
+                                li class="m-nav__item"
+                                  a href="#" role="button" class="m-nav__link" data-toggle="modal" data-target="#modal-leave-project"
+                                    i class="m-nav__link-icon flaticon-logout"
+                                    span class="m-nav__link-text" Leave
                               / li class="m-nav__separator m-nav__separator--fit"
                               / li class="m-nav__item"
                                 / a href="#" class="btn btn-outline-danger m-btn m-btn--pill m-btn--wide btn-sm" Cancel
@@ -57,7 +64,12 @@ div class="m-grid__item m-grid__item--fluid m-wrapper"
                     br
                     span class="m-widget7__time" 3 days ago
                 div class="m-widget7__button"
-                  a class="m-btn m-btn--pill btn btn-danger" href="/request/list/#{proj.id}" role="button" See All Requests
+                  a class="m-btn m-btn--pill btn btn-danger" href="/project/#{proj.id}" role="button" See All Requests
               / end::Widget 7
           / end:: Widgets/Announcements 1
       / End::Section
+      include :modal_manage_collaborators
+      include :modal_new_project
+      include :modal_edit_project
+      include :modal_delete_project
+      include :modal_leave_project

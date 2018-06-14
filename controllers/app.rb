@@ -3,7 +3,10 @@
 require 'roda'
 require 'slim'
 require 'slim/include'
+<<<<<<< HEAD
 
+=======
+>>>>>>> 353cf1c51642570d88d42276bdf7e533da7059e2
 module Dada
   # Base class for Dada Web Application
   class App < Roda
@@ -17,8 +20,12 @@ module Dada
 
     # 'vendors.bundle.js', 'scripts.bundle.js', 'dashboard.js'
     route do |routing|
-      # @current_account = SecureSession.new(session).get(:current_account)
       @current_user = Session.new(SecureSession.new(session)).get_user
+
+      if @current_user.logged_in?
+        project_list = GetAllProjects.new(App.config).call(@current_user)
+        @projects = Projects.new(project_list)
+      end
 
       routing.public
       routing.assets
@@ -27,13 +34,11 @@ module Dada
       # GET /
       routing.root do
         if @current_user.logged_in?
-          project_list = GetAllProjects.new(App.config).call(@current_user)
-          projects = Projects.new(project_list)
-          projects.all.each do |proj|
-            puts proj.id
-          end
-          view '/project/home',
-               locals: { current_user: @current_user, projects: projects }
+          # project_list = GetAllProjects.new(App.config).call(@current_user)
+          # projects = Projects.new(project_list)
+          view '/project/project_list/project_list',
+               locals: { current_user: @current_user, projects: @projects },
+               layout_opts: { locals: { projects: @projects } }
         else
           routing.redirect '/auth/login'
         end

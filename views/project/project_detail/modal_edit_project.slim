@@ -1,0 +1,20 @@
+      / begin::Modal::EditProject
+      div class="modal fade" id="modal-edit-project" tabindex="-1" role="dialog" aria-labelledby="editProjectModal" aria-hidden="true"
+        div class="modal-dialog modal-lg" role="document"
+          div class="modal-content"
+            div class="modal-header"
+              h5 class="modal-title" id="exampleModalLabel" Edit Project
+              button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                span aria-hidden="true" &times;
+            form action="/project/edit/#{project.id}" method="post" id="form-edit-project-detail"
+              div class="modal-body"
+                  div class="form-group m-form__group"
+                    label for="title" class="form-control-label" Title:
+                    input type="text" name="title" id="project_title_input_edit" class="form-control m-input" placeholder="Please Enter Your Project's title"
+                  div class="form-group m-form__group"
+                    label for="description" class="form-control-label" Description:
+                    input type="text" name="description" id="project_description_input_edit" class="form-control m-input" placeholder="Please Enter the Descriptions of Your Project"
+              div class="modal-footer"
+                button type="button" class="btn btn-secondary" data-dismiss="modal" Close
+                button type="submit" value="Submit" id='edit-project-detail'  class="btn btn-success" Save Change
+      / end::Modal
