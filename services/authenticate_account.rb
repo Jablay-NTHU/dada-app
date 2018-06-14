@@ -12,8 +12,8 @@ module Dada
     end
 
     def call(username:, password:)
-      response = HTTP.post("#{@config.API_URL}/accounts/authenticate",
-                           json: { username: username, password: password })
+      response = HTTP.post("#{@config.API_URL}/auth/authenticate/email_account",
+        json: { username: username, password: password })
 
       raise(UnauthorizedError) unless response.code == 200
       response.parse
