@@ -20,16 +20,19 @@ module Dada
       routing.is 'sso_callback' do
         # GET /auth/sso_callback
         routing.get do
+          puts "@@@@@@@@@@@@@@#{routing.params['code']}"
+
           sso_account = AuthenticateGithubAccount
                         .new(App.config)
                         .call(routing.params['code'])
 
+          puts "#{sso_account}"
           current_user = User.new(sso_account['account'],
                                   sso_account['auth_token'])
 
           Session.new(SecureSession.new(session)).set_user(current_user)
           flash[:notice] = "Welcome #{current_user.username}!"
-          routing.redirect '/projects'
+          routing.redirect '/project'
         rescue StandardError => error
           puts error.inspect
           puts error.backtrace

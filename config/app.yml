@@ -4,6 +4,7 @@ development:
   APP_URL:      http://localhost:3000
   GH_OAUTH_URL: https://github.com/login/oauth/authorize
   GH_TOKEN_URL: https://github.com/login/oauth/access_token
+  GH_SCOPE:     user:email
 
 test:
   API_URL:      http://localhost:9292/api/v1

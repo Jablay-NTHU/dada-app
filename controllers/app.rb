@@ -3,10 +3,7 @@
 require 'roda'
 require 'slim'
 require 'slim/include'
-<<<<<<< HEAD
 
-=======
->>>>>>> 353cf1c51642570d88d42276bdf7e533da7059e2
 module Dada
   # Base class for Dada Web Application
   class App < Roda
