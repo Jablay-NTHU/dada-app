@@ -20,13 +20,13 @@ module Dada
       routing.is 'sso_callback' do
         # GET /auth/sso_callback
         routing.get do
-          puts "@@@@@@@@@@@@@@#{routing.params['code']}"
+          # puts "@@@@@@@@@@@@@@#{routing.params['code']}"
 
           sso_account = AuthenticateGithubAccount
                         .new(App.config)
                         .call(routing.params['code'])
 
-          puts "#{sso_account}"
+          # puts "#{sso_account}"
           current_user = User.new(sso_account['account'],
                                   sso_account['auth_token'])
 
@@ -72,9 +72,9 @@ module Dada
           Session.new(SecureSession.new(session)).set_user(current_user)
           flash[:notice] = "Welcome back #{current_user.username}!"
           routing.redirect '/'
-        rescue StandardError
-          # puts "ERROR: #{error.inspect}"
-          # puts error.backtrace
+        rescue StandardError => error
+          puts "ERROR: #{error.inspect}"
+          puts error.backtrace
           flash[:error] = 'Username and password did not match our records'
           routing.redirect @login_route
         end
@@ -102,23 +102,25 @@ module Dada
           # POST /auth/register
           routing.post do
             flash[:params] = routing.params
-
-            account_data = JsonRequestBody.symbolize(routing.params)
-            VerifyRegistration.new(App.config).call(account_data)
+            # account_data = JsonRequestBody.symbolize(routing.params)
+            # VerifyRegistration.new(App.config).call(account_data)
 
             registration = Form::Registration.call(routing.params)
+
             if registration.failure?
               flash[:error] = Form.validation_errors(registration)
               routing.redirect @register_route
             end
 
+            # puts "#{registration}"
+
             VerifyRegistration.new(App.config).call(registration)
 
             flash[:notice] = 'Please check your email verification'
             routing.redirect '/'
-          rescue StandardError
-            # puts "ERROR CREATING ACCOUNT: #{error.inspect}"
-            # puts error.backtrace
+          rescue StandardError => error
+            puts "ERROR CREATING ACCOUNT: #{error.inspect}"
+            puts error.backtrace
             flash[:error] = 'Account detail are not valid: please check...'
             routing.redirect @register_route
           end

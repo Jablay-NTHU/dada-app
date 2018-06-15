@@ -26,10 +26,10 @@ div class="m-grid__item m-grid__item--fluid m-wrapper"
                 table id="token-table" class="table table-striped m-table"
                   thead
                     tr
-                      th Name
-                      th Value
-                      th Description
-                      th Action
+                      th style="width:25%" Name
+                      th style="width:25%" Value
+                      th style="width:40%" Description
+                      th style="width:10%" Action
                   tbody
                     - tokens.all.each do |token|
                       tr id="row-#{token.id}"

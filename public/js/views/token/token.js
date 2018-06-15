@@ -30,8 +30,8 @@ $(document).ready(function() {
     description = $('#description_input_new').val();
 
     $('#token-table tbody').append(
-      '<tr>'+
-        '<input class="token-id" type="hidden" value="row-'+id+'">'+
+      '<tr id="row-'+id+'">'+
+        '<input class="token-id" type="hidden" value="'+id+'">'+
         '<td class="token-name">'+name+'</td>'+		
         '<td class="token-value">'+value+'</td>'+		
         '<td class="token-description">'+description+'</td>'+		

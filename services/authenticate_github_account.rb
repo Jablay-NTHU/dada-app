@@ -11,7 +11,6 @@ module Dada
 
     def call(code)
       access_token = get_access_token_from_github(code)
-      puts "@@@@@@@@@@@@@#{access_token}"
       get_sso_account_from_api(access_token)
     end
 

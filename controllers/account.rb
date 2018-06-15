@@ -24,7 +24,7 @@ module Dada
           passwords = Form::Passwords.call(routing.params)
           if passwords.failure?
             flash[:error] = Form.message_values(passwords)
-            routing.redirect "/account/#{registration_token}"
+            routing.redirect "/auth/register/#{registration_token}"
           end
 
           new_account = SecureMessage.decrypt(registration_token)
@@ -36,9 +36,11 @@ module Dada
           flash[:notice] = 'Account created! Please login'
           routing.redirect '/auth/login'
         rescue CreateAccount::InvalidAccount => error
+          puts error.backtrace
           flash[:error] = error.message
           routing.redirect '/auth/register'
         rescue StandardError => error
+          puts error.backtrace
           flash[:error] = error.message
           routing.redirect(
             "#{App.config.APP_URL}/auth/register/#{registration_token}"
