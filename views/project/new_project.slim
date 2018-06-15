@@ -24,25 +24,30 @@ div class="m-grid__item m-grid__item--fluid m-wrapper"
               div class="m-portlet__head-title"
                 span class="m-portlet__head-icon m--hide"
                   i class="la la-gear"
-                h3 class="m-portlet__head-text"
+                h3 class="m-portlet__head-text" Project Info:
           / begin::Form
           form class="m-form m-form--fit" action="/project/create" method="post" id="form-login"
             div class="m-portlet__body"
-              div class="m-form__section m-form__section--first"
-                div class="m-form__heading"
-                  h3 class="m-form__heading-title" 1. Project Info:
+              div class="m-form__section"
                 div class="form-group m-form__group"
                   label for="example_input_full_name" Project's Title:
-                  input type="text" name="title" id="title_input" class="form-control m-input" placeholder="Enter full name"
+                  - if flash[:params]
+                    input type="text" name="title" id="title_input" class="form-control m-input" placeholder="Enter title" value="#{flash[:params]['title']}"
+                  - else
+                    input type="text" name="title" id="title_input" class="form-control m-input" placeholder="Enter title"
                   span class="m-form__help" Please enter your project's title
                 div class="form-group m-form__group"
-                  label Email address:
-                  input type="text" name="description" id="description_input" class="form-control m-input" placeholder="Enter email"
+                  label Descriptions:
+                  - if flash[:params]
+                    input type="text" name="description" id="description_input" class="form-control m-input" placeholder="Enter description" value="#{flash[:params]['description']}"
+                  - else
+                    input type="text" name="description" id="description_input" class="form-control m-input" placeholder="Enter description"
                   span class="m-form__help" Please add the brief description of the project
             div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit"
               div class="m-form__actions m-form__actions--solid"
                 button type="submit" value="Submit" id='m_create_project_submit'  class="btn btn-success" Submit
-                button type="reset" class="btn btn-secondary" Cancel
+                span &nbsp;
+                a href="/" class="btn btn-secondary" Cancel
           / End::Form
         / End::Portlet
     / End::Section

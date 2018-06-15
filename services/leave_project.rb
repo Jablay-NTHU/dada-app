@@ -3,21 +3,20 @@
 require 'http'
 
 # Returns an authenticated user, or nil
-class CreateProject
+class LeaveProject
   # Error for inability of API to create account
   class InvalidProject < StandardError
     def message
-      'This project cannot be created: please try again'
+      'You cannot leave the project: please try again'
     end
   end
   def initialize(config)
     @config = config
   end
 
-  def call(user, project_data)
+  def call(user, project_id)
     response = HTTP.auth("Bearer #{user.auth_token}")
-                   .post("#{@config.API_URL}/projects",
-                         json: project_data)
+                   .post("#{@config.API_URL}/projects/#{project_id}/leave")
 
     raise InvalidProject unless response.code == 201
   end

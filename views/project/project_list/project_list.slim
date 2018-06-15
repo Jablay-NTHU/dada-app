@@ -8,15 +8,15 @@ div class="m-grid__item m-grid__item--fluid m-wrapper"
   div class="m-content"
     == render('layout/flash_bar')
     / Begin::Section
-    div class="row"
+    div class="row" id="project-list"
       - projects.all.each do |proj|
         div class="col-xl-4"
           / begin:: Widgets/Announcements 1
-          div class="m-portlet m--bg-accent m-portlet--bordered-semi m-portlet--skin-dark m-portlet--full-height "
+          div class="m-portlet m--bg-accent m-portlet--bordered-semi m-portlet--skin-dark m-portlet--full-height proj"
             div class="m-portlet__head"
               div class="m-portlet__head-caption"
                 div class="m-portlet__head-title"
-                  h3 class="m-portlet__head-text" #{proj.title}
+                  h3 class="m-portlet__head-text project-title" #{proj.title}
               div class="m-portlet__head-tools"
                 ul class="m-portlet__nav"
                   li class="m-portlet__nav-item m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" m-dropdown-toggle="hover"
@@ -28,6 +28,7 @@ div class="m-grid__item m-grid__item--fluid m-wrapper"
                         div class="m-dropdown__body"
                           div class="m-dropdown__content"
                             ul class="m-nav"
+                              input type="hidden" class="project-id" value="#{proj.id}"
                               li class="m-nav__section m-nav__section--first"
                                 span class="m-nav__section-text" Quick Actions
                               li class="m-nav__item"
@@ -36,26 +37,27 @@ div class="m-grid__item m-grid__item--fluid m-wrapper"
                                   span class="m-nav__link-text" Collaborators
                               - if proj.policies.can_edit
                                 li class="m-nav__item"
-                                  a href="#" role="button" class="m-nav__link" data-toggle="modal" data-target="#modal-edit-project"
+                                  a href="#" role="button" class="m-nav__link edit-project" data-toggle="modal" data-target="#modal-edit-project"
                                     i class="m-nav__link-icon flaticon-edit-1"
                                     span class="m-nav__link-text" Edit
                               - if proj.policies.can_delete
                                 li class="m-nav__item"
-                                  a href="#" role="button" class="m-nav__link" data-toggle="modal" data-target="#modal-delete-project"
+                                  a href="#" role="button" class="m-nav__link delete-project" data-toggle="modal" data-target="#modal-delete-project"
                                     i class="m-nav__link-icon flaticon-delete-1"
                                     span class="m-nav__link-text" Delete
                               - if proj.policies.can_leave
                                 li class="m-nav__item"
-                                  a href="#" role="button" class="m-nav__link" data-toggle="modal" data-target="#modal-leave-project"
+                                  a href="#" role="button" class="m-nav__link leave-project" data-toggle="modal" data-target="#modal-leave-project"
                                     i class="m-nav__link-icon flaticon-logout"
                                     span class="m-nav__link-text" Leave
                               / li class="m-nav__separator m-nav__separator--fit"
                               / li class="m-nav__item"
                                 / a href="#" class="btn btn-outline-danger m-btn m-btn--pill m-btn--wide btn-sm" Cancel
-            div class="m-portlet__body"
+            div class="m-portlet__body proj-body"
               /  begin::Widget 7 
               div class="m-widget7 m-widget7--skin-dark"
-                div class="m-widget7__desc" #{proj.description}
+                div class="m-widget7__desc" 
+                  span class="project-description" #{proj.description}
                 div class="m-widget7__user"
                   div class="m-widget7__user-img"
                     img class="m-widget7__img" src="/image/users/100_3.jpg" alt=""
