@@ -114,23 +114,24 @@ div class="m-grid__item m-grid__item--fluid m-wrapper"
                 /         i class="m-btn-icon flaticon-file-1" 
                 /         span &nbsp; New Collaborator
                 div class="row"
-                  div class="col-lg-12"
-                    div class="form-group m-form__group"
-                      form action="/project/#{project.id}/add_collaborator" method="post" id="form-add-collaborator"
-                        div class="form-group m-form__group"
-                          label for="title" class="form-control-label" Add Collaborator:
-                          - if flash[:params]
-                            input class="form-control m-input" name="email" id="add-collaborator-input" type="text" placeholder="Enter collaborator email" value="#{flash[:params]['email']}"
-                          - else
-                            input class="form-control m-input" name="email" id="add-collaborator-input" type="text" placeholder="Enter collaborator email"
-                        div class="m-form__actions m-form__actions--solid"
-                          button class="m-btn btn btn-danger" type="submit" id="add-collab" Add
-                        / div class="col-lg-4 col-md-9 col-sm-12"
-                          / div class="m-typeahead"
-                            / input class="form-control m-input" id="m_typeahead_1" type="text" placeholder="States of USA"
-                        / div class="col-lg-4 col-md-9 col-sm-12"
-                          / a class="m-btn btn btn-danger" href="#" role="button" id="add-collaborator"
-                          / button class="m-btn btn btn-danger" type="submit" href="/project/#{project.id}/add_collaborator" id="add-collab" Add
+                - if project.policies.can_add_collaborators
+                    div class="col-lg-12"
+                      div class="form-group m-form__group"
+                        form action="/project/#{project.id}/add_collaborator" method="post" id="form-add-collaborator"
+                          div class="form-group m-form__group"
+                            label for="title" class="form-control-label" Add Collaborator:
+                            - if flash[:params]
+                              input class="form-control m-input" name="email" id="add-collaborator-input" type="text" placeholder="Enter collaborator email" value="#{flash[:params]['email']}"
+                            - else
+                              input class="form-control m-input" name="email" id="add-collaborator-input" type="text" placeholder="Enter collaborator email"
+                          div class="m-form__actions m-form__actions--solid"
+                            button class="m-btn btn btn-danger" type="submit" id="add-collab" Add
+                          / div class="col-lg-4 col-md-9 col-sm-12"
+                            / div class="m-typeahead"
+                              / input class="form-control m-input" id="m_typeahead_1" type="text" placeholder="States of USA"
+                          / div class="col-lg-4 col-md-9 col-sm-12"
+                            / a class="m-btn btn btn-danger" href="#" role="button" id="add-collaborator"
+                            / button class="m-btn btn btn-danger" type="submit" href="/project/#{project.id}/add_collaborator" id="add-collab" Add
                 table class="table table-striped m-table" id="collaborator-list"
                   thead
                     tr

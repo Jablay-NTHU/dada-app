@@ -4,7 +4,7 @@ require 'http'
 
 module Dada
   # Returns an authenticated user, or nil
-  class AuthenticateAccount
+  class AuthenticateEmailAccount
     class UnauthorizedError < StandardError; end
 
     def initialize(config)
@@ -12,8 +12,10 @@ module Dada
     end
 
     def call(username:, password:)
+      credentials = { username: username, password: password }
+      signed_credentials = SecureMessage.sign(credentials)
       response = HTTP.post("#{@config.API_URL}/auth/authenticate/email_account",
-        json: { username: username, password: password })
+                           json: signed_credentials)
 
       raise(UnauthorizedError) unless response.code == 200
       response.parse
