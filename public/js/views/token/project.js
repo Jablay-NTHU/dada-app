@@ -57,22 +57,23 @@ $(document).ready(function() {
 
   $('#request-table').on('click', 'tbody tr td a.delete-request', function() {
     // Obtaining row information from token-table
+    alert('mantab')
     id = $(this).closest('tr').find('input.request-id').val();
-    new_action = '/request/delete/' + id
+    new_action = '/request/' + id + '/delete'
     // // Assign the value to modal
     $('#form-delete-request').attr('action', new_action);
     $('#request-delete-id').attr('value', id);
   }); 
 
-  $('#form-delete-request').on('submit', function() {
-    id = $('#request-delete-id').val();
-    row_name = '#request-'+id
-    jQuery(row_name).fadeOut(function(){
-      jQuery(this).remove();
-    });
-    $('#modal-delete-request').modal('hide');
-    return false;
-  });
+  // $('#form-delete-request').on('submit', function() {
+  //   id = $('#request-delete-id').val();
+  //   row_name = '#request-'+id
+  //   jQuery(row_name).fadeOut(function(){
+  //     jQuery(this).remove();
+  //   });
+  //   $('#modal-delete-request').modal('hide');
+  //   return false;
+  // });
 
   $('#collaborator-list').on('click', 'tbody tr td a.delete-collaborator', function() {
     // Obtaining row information from token-table
