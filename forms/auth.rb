@@ -17,6 +17,10 @@ module Dada
       required(:email).filled(format?: EMAIL_REGEX)
     end
 
+    EmailAccount = Dry::Validation.Params do
+      required(:email).filled(format?: EMAIL_REGEX)
+    end
+
     Passwords = Dry::Validation.Params do
       configure do
         config.messages_file = File.join(__dir__, 'errors/password.yml')

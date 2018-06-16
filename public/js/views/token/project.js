@@ -72,5 +72,13 @@ $(document).ready(function() {
     });
     $('#modal-delete-request').modal('hide');
     return false;
-  });  
+  });
+
+  $('#collaborator-list').on('click', 'tbody tr td a.delete-collaborator', function() {
+    // Obtaining row information from token-table
+    username = $(this).closest('tr').find('input.collaborator-username').val();
+    alert(username)
+    // // Assign the value to modal
+    $('#collaborator-delete-username').attr('value', username);
+  }); 
 });   

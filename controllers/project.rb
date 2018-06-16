@@ -52,7 +52,7 @@ module Dada
           end
         end
 
-        # GET /project/[proj_id]
+        # /project/[proj_id]
         routing.on(String) do |proj_id|
 
           # POST /project/[proj_id]/delete
@@ -111,6 +111,49 @@ module Dada
             end
           end
 
+          # POST /project/[proj_id]/add_collaborator
+          routing.on 'add_collaborator' do
+            # POST /project/[proj_id]/add_collaborator
+            routing.post do
+              flash[:params] = routing.params
+
+              valid_email = Form::EmailAccount.call(routing.params)
+              if valid_email.failure?
+                flash[:error] = Form.validation_errors(valid_email)
+                routing.redirect "/project/#{proj_id}"
+              end
+
+              NewCollaborator.new(App.config).call(@current_user,
+                                                   proj_id, routing.params)
+
+              flash[:notice] = 'Collaborator has been succesfully added'
+              routing.redirect "/project/#{proj_id}"
+            rescue StandardError => error
+              puts "ERROR ADDING COLLABORATOR: #{error.inspect}"
+              puts error.backtrace
+              flash[:error] = 'Collaborator detail are not valid: please check...'
+              routing.redirect "/project/#{proj_id}"
+            end
+          end
+
+          # POST /project/[proj_id]/remove_collaborator
+          routing.on 'remove_collaborator' do
+            # POST /project/[proj_id]/remove_collaborator
+            routing.post do
+              routing.post do
+                RemoveCollaborator.new(App.config).call(@current_user, proj_id, routing.params)
+                flash[:notice] = 'You have succesfully remove a collaborator'
+                routing.redirect "/project/#{proj_id}"
+              rescue StandardError => error
+                puts "ERROR REMOVING COLLABORATOR: #{error.inspect}"
+                puts error.backtrace
+                flash[:error] = 'You cannot remove a collaborator: please try again'
+                routing.redirect "/project/#{proj_id}"
+              end
+            end
+          end
+
+          # GET /project/[proj_id]
           routing.get do
             if @current_user.logged_in?
               proj_info = GetProject.new(App.config).call(@current_user, proj_id)
