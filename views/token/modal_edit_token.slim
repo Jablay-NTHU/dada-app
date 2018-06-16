@@ -1,0 +1,24 @@
+      / begin::Modal::EditProject
+      div class="modal fade" id="modal-edit-token" tabindex="-1" role="dialog" aria-labelledby="editTokenModal" aria-hidden="true"
+        div class="modal-dialog modal-lg" role="document"
+          div class="modal-content"
+            div class="modal-header"
+              h5 class="modal-title" id="exampleModalLabel" Edit Token
+              button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                span aria-hidden="true" &times;
+            form action="/token/edit/" method="post" id="form-edit-token"
+              div class="modal-body"
+                  input type="hidden" id="token-edit-id" value=""
+                  div class="form-group m-form__group"
+                    label for="name-name" class="form-control-label" Name:
+                    input type="text" name="name" id="name_input_edit" class="form-control m-input" autocomplete="off" placeholder="Please The Key Name of the Token"
+                  div class="form-group m-form__group"
+                    label for="value-name" class="form-control-label" Value:
+                    input type="text" name="value" id="value_input_edit" class="form-control m-input" autocomplete="off" placeholder="Please The Value of the Token"
+                  div class="form-group m-form__group"
+                    label for="description-text" class="form-control-label" Description:
+                    input type="text" name="description" id="description_input_edit" class="form-control m-input" autocomplete="off" placeholder="Please Enter the Descriptions of Your Token"
+              div class="modal-footer"
+                button type="button" class="btn btn-secondary" data-dismiss="modal" Close
+                button type="submit" value="Submit" id='m_create_project_submit'  class="btn btn-success" Save Change
+      / end::Modal

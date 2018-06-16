@@ -1,0 +1,15 @@
+      / begin::Modal::NewProject
+      div class="modal fade" id="modal-delete-collaborators" tabindex="-1" role="dialog" aria-labelledby="deleteCollaboratorsModal" aria-hidden="true"
+        div class="modal-dialog modal-lg" role="document"
+          div class="modal-content"
+            div class="modal-header"
+              h5 class="modal-title" id="exampleModalLabel" Remove Collaborators
+              button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                span aria-hidden="true" &times;
+            form action="/project/#{project.id}/remove_collaborator" method="post" id="form-remove-collaborator"
+              div class="modal-body"
+                input type="hidden" id="collaborator-delete-username" value="" name="username"            
+                p Are you sure you want to remove this collaborator? 
+              div class="modal-footer"
+                button type="button" class="btn btn-secondary" data-dismiss="modal" Close
+                button type="submit" value="Submit" id='delete-project-button'  class="btn btn-danger" Yes, Remove him/her!

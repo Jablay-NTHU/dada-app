@@ -1,0 +1,48 @@
+div class="m-grid__item m-grid__item--fluid m-wrapper"
+  div class="m-subheader "
+    div class="d-flex align-items-center"
+      div class="mr-auto"
+        h3 class="m-subheader__title m-subheader__title" Manage My Tokens
+      div
+        a class="m-btn--align-right m-btn--pill btn btn-danger" href="#" role="button" data-toggle="modal" data-target="#modal-new-token"
+          i class="m-btn-icon flaticon-file-1"
+          span class="m-btn-text" &nbsp New Token
+      span &nbsp;&nbsp;
+  / END: Subheader					
+  div class="m-content"
+    == render('layout/flash_bar')
+    / Begin::Section
+    div class="row"
+      div class="col-xl-12"
+        div class="m-portlet"
+          div class="m-portlet__head"
+            div class="m-portlet__head-caption"
+              div class="m-portlet__head-title"
+                h3 class="m-portlet__head-text" Token List
+          div class="m-portlet__body"
+            / begin::Section
+            div class="m-section"
+              div class="m-section__content"
+                table id="token-table" class="table table-striped m-table"
+                  thead
+                    tr
+                      th style="width:25%" Name
+                      th style="width:25%" Value
+                      th style="width:40%" Description
+                      th style="width:10%" Action
+                  tbody
+                    - tokens.all.each do |token|
+                      tr id="row-#{token.id}"
+                        input class="token-id" type="hidden" value="#{token.id}"
+                        td class="token-name" style="width:20%" == "#{token.name}"
+                        td class="token-value" style="width:30%" == "#{token.value}"
+                        td class="token-description" style="width:40%" == "#{token.description}"
+                        td style="width:10%"
+                          a href="#" class="edit-token" role="button" data-toggle="modal" data-target="#modal-edit-token"   
+                            i class="flaticon-edit-1"
+                          span &nbsp;&nbsp;
+                          a href="#" class="delete-token" role="button" data-toggle="modal" data-target="#modal-delete-token"  
+                            i class="flaticon-delete-1"                    
+    include :modal_new_token
+    include :modal_edit_token
+    include :modal_delete_token

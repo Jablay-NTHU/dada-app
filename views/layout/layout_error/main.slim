@@ -1,0 +1,21 @@
+doctype html
+html lang='en'
+	/ begin::Head
+	head
+		meta charset="utf-8"
+		title Metronic | Login Page
+		meta name="description" content="Latest updates and statistic charts"
+		meta http-equiv="X-UA-Compatible" content="IE=edge"
+		meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"
+		script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"
+		script src="/js/webfont.js" type="text/javascript"
+
+    == assets(:css)
+
+		link rel='icon' href='/image/logo/favicon.ico'
+	body  class="m--skin- m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default"
+		div class="m-grid m-grid--hor m-grid--root m-page"
+			div class="m-grid__item m-grid__item--fluid m-grid m-error-4" style="background-image: url(/image/bg/error/bg4.jpg);"
+				== yield
+		script src="/js/vendors.bundle.js" type="text/javascript"
+		script src="/js/scripts.bundle.js" type="text/javascript"

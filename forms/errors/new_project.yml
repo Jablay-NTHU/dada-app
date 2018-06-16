@@ -1,0 +1,4 @@
+en:
+  errors:
+    title: 'project must be filled'
+    description: 'project must be filled'

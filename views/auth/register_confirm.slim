@@ -9,14 +9,20 @@ div class="m-stack__item m-stack__item--fluid"
         hr
         == render('layout/flash_bar')
         form class="m-login__form m-form"  action='/account/#{registration_token}' method='post' id='user-form'
-          div class="form-group m-form__group"
+          div class="form-group m-form__group"          
             input class="form-control m-input" id='username_input' type="text" name="username" autocomplete="off" value='#{new_account['username']}' readonly="readonly"
           div class="form-group m-form__group"
             input class="form-control m-input" id='email_input' type="text" name="email" autocomplete="off" value='#{new_account['email']}' readonly="readonly"
           div class="form-group m-form__group"
-            input class="form-control m-input" id='password_input' type="password" autocomplete="off" placeholder="Type your password" name="password"
+            - if flash[:params]
+              input class="form-control m-input" id='password_input' type="password" autocomplete="off" placeholder="Type your password" name="password" value="#{flash[:params]['password']}"
+            - else
+              input class="form-control m-input" id='password_input' type="password" autocomplete="off" placeholder="Type your password" name="password"
           div class="form-group m-form__group"
-            input class="form-control m-input" id='password_confirm_input' type="password" placeholder="Re-enter your password" autocomplete="off" name="password_confirm" 
+            - if flash[:params]
+              input class="form-control m-input" id='password_confirm_input' type="password" placeholder="Re-enter your password" autocomplete="off" name="password_confirm" value="#{flash[:params]['password_confirm']}"
+            - else
+              input class="form-control m-input" id='password_confirm_input' type="password" placeholder="Re-enter your password" autocomplete="off" name="password_confirm" 
           div class="m-login__form-action"
             button type='submit' id='registration-form-submit' value='submit' class='btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air' Submit
 div class="m-stack__item m-stack__item--center" 
