@@ -38,11 +38,11 @@ $(document).ready(function() {
     jQuery("#header-table tbody tr").each(function() {
       key = jQuery(this).find("input.header-key").val();
       val = jQuery(this).find("input.header-value").val();
-      PUT_HEADERS[key] = val;
-      console.log(key+": "+val);                        
+      // PUT_HEADERS[key] = val;
+      // console.log(key+": "+val);                        
     });
-    $('#header-parameter-input').val(JSON.stringify(PUT_HEADERS))
-    console.log(JSON.stringify(PUT_HEADERS));                        
+    // $('#header-parameter-input').val(JSON.stringify(PUT_HEADERS))
+    // console.log(JSON.stringify(PUT_HEADERS));                        
     // return false;
 
     // 'Access-Control-Allow-Origin': '*'
