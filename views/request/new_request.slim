@@ -13,7 +13,7 @@ div class="m-grid__item m-grid__item--fluid m-wrapper"
               span class="m-nav__link-text" Create New Request
   / END: Subheader					
   div class="m-content"
-    form class="m-form m-form--fit" action="/request/create" method="post" id="form-request-create"
+    form class="m-form m-form--fit" action="/request/try" method="post" id="form-request-create"
       div class="row"
         div class="col-lg-6"
           / begin::Portlet
@@ -26,6 +26,7 @@ div class="m-grid__item m-grid__item--fluid m-wrapper"
                   h3 class="m-portlet__head-text" New API Request Form
             / begin::Form
             div class="m-portlet__body"
+              input type="text" name="header-parameter" id="header-parameter-input" class="form-control m-input" placeholder="enter parameter"
               div class="m-form__section m-form__section--first"
                 div class="m-form__heading"
                   h3 class="m-form__heading-title" 1. Request Info:
@@ -39,7 +40,7 @@ div class="m-grid__item m-grid__item--fluid m-wrapper"
                   span class="m-form__help" Please enter your API Request's description
                 div class="form-group m-form__group"
                   label API URL:
-                  input type="text" name="api_url" id="new_request_url_input" class="form-control m-input" placeholder="Enter API URL of the Request"
+                  input type="text" name="api_url" id="new_request_url_input" class="form-control m-input" placeholder="Enter API URL of the Request" value='https://api.github.com/repos/bhimasta/pinaple-sas'
                   span class="m-form__help" Please enter your API Request's URL
                 div class="form-group m-form__group"
                   label Parameters: &nbsp;&nbsp;
@@ -55,9 +56,17 @@ div class="m-grid__item m-grid__item--fluid m-wrapper"
                     tbody
                       tr
                         td 
-                          input type="text" name="header-key[]" class="form-control m-input header-key" placeholder="Key"                
+                          input type="text" name="header[]['key']" class="form-control m-input header-key" placeholder="Key" value="Accept"     
                         td
-                          input type="text" name="header-value[]" class="form-control m-input header-value" placeholder="Value"   
+                          input type="text" name="header[]['value']" class="form-control m-input header-value" placeholder="Value" value="application/vnd.github.v3+json"
+                        td
+                          a href="#" role="button" class="m-nav__link remove-header"
+                            i class="m-nav__link-icon flaticon-delete-1"
+                      tr
+                        td 
+                          input type="text" name="header[]['key']" class="form-control m-input header-key" placeholder="Key" value="Authorization"    
+                        td
+                          input type="text" name="header[]['value']" class="form-control m-input header-value" placeholder="Value" value="token d652e052afabda7c38e572d38b622de76d959dd2"
                         td
                           a href="#" role="button" class="m-nav__link remove-header"
                             i class="m-nav__link-icon flaticon-delete-1"
@@ -68,16 +77,16 @@ div class="m-grid__item m-grid__item--fluid m-wrapper"
                   label for="" API Request's Interval
                   div class="m-radio-inline"
                     label class="m-radio"
-                      input type="radio" id="int-once" class="interval" name="example_3" value="Once" checked="checked" Once
+                      input type="radio" id="int-once" class="interval" name="interval" value="Once" checked="checked" Once
                       span
                     label class="m-radio"
-                      input type="radio" id="int-daily" class="interval" name="example_3" value="Daily" Daily
+                      input type="radio" id="int-daily" class="interval" name="interval" value="Daily" Daily
                       span
                     label class="m-radio"
-                      input type="radio" id="int-weekly" class="interval" name="example_3" value="Weekly" Weekly
+                      input type="radio" id="int-weekly" class="interval" name="interval" value="Weekly" Weekly
                       span
                     label class="m-radio"
-                      input type="radio" id="id-monthly" class="interval" name="example_3" value="Monthly" Monthly
+                      input type="radio" id="id-monthly" class="interval" name="interval" value="Monthly" Monthly
                       span
                   span class="m-form__help" For scheduled request, we will run on 00.01 Taiwan Time
                 div class="form-group m-form__group" id="date-start-div" style="display:none"
@@ -106,8 +115,12 @@ div class="m-grid__item m-grid__item--fluid m-wrapper"
             div class="m-portlet__body"
               div class="m-form__section m-form__section--first"
                 div class="form-group m-form__group"
-                  textarea name="request" id="api-result" rows="25" class="form-control m-input"
+                  input name="status_code" id="status-result" class="form-control m-input" readonly="readonly"
+                div class="form-group m-form__group"
+                  textarea name="header_secure" id="header-result" rows="25" class="form-control m-input" readonly="readonly"
+                div class="form-group m-form__group"
+                  textarea name="body_secure" id="api-result" rows="25" class="form-control m-input" readonly="readonly"
             div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit"
               div class="m-form__actions m-form__actions--solid"
-                button type="submit" value="Submit" id='m_create_project_submit'  class="btn btn-success" Save Request
+                button type="submit" value="Submit" id='m_create_request_submit'  class="btn btn-success" Save Request
                 button type="reset" class="btn btn-secondary" Cancel
