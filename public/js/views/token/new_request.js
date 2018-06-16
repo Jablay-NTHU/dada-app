@@ -56,20 +56,20 @@ $(document).ready(function() {
        success: function(data, textStatus, xhr)
        {
         // status code 200 ==> save on field 'status_code'
-        alert('jancuk');
-        console.log('status');
-        console.log(xhr.status);
+        // alert('jancuk');
+        // console.log('status');
+        // console.log(xhr.status);
         // alert(xhr.status) 
 
         // show response header ==> save on field 'header_secure'
-        console.log('response header');
-        console.log(xhr.getAllResponseHeaders());
+        // console.log('response header');
+        // console.log(xhr.getAllResponseHeaders());
         // ...
 
         // return the content => save on field 'body_secure'
         x = JSON.stringify(data, undefined, 4);
-        console.log('success data')
-        console.log(x)
+        // console.log('success data')
+        // console.log(x)
         document.getElementById('status-result').value = xhr.status; // put the result on textarea with id = 'api-results'
         document.getElementById('header-result').value = xhr.getAllResponseHeaders(); // put the result on textarea with id = 'api-results'
         document.getElementById('api-result').value = x; // put the result on textarea with id = 'api-results'
@@ -81,19 +81,19 @@ $(document).ready(function() {
        {  
         alert('asu')
         // status code 404 ==> save on field 'status_code'
-        console.log('status')
-        console.log(data.status)
+        // console.log('status')
+        // console.log(data.status)
         // alert(xhr.status) 
 
         // show response header ==> save on field 'header_secure'
-        console.log('response header')
-        console.log(data.getAllResponseHeaders())
+        // console.log('response header')
+        // console.log(data.getAllResponseHeaders())
         // ...
 
         // return the content => save on field 'body_secure'
         x = JSON.stringify(data, undefined, 4);
-        console.log('success data')
-        console.log(x)
+        // console.log('success data')
+        // console.log(x)
         document.getElementById('status-result').value = xhr.status; // put the result on textarea with id = 'api-results'
         document.getElementById('header-result').value = xhr.getAllResponseHeaders(); // put the result on textarea with id = 'api-results'
         document.getElementById('api-result').value = x; // put the result on textarea with id = 'api-results'

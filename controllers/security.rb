@@ -4,7 +4,7 @@ require 'rack/session/redis'
 require 'rack/ssl-enforcer'
 require 'secure_headers'
 
-module Credence
+module Dada
   # Configuration for the API
   class App < Roda
     configure do
@@ -57,12 +57,12 @@ module Credence
         report_only: false,
         preserve_schemes: true,
         default_src: %w['self'],
-        child_src: %w['self'],
-        connect_src: %w[wws:],
+        worker_src: %w['self'],
+        connect_src: %w[wss: https:],
         img_src: %w['self'],
-        font_src: %w['self' https://maxcdn.bootstrapcdn.com],
-        script_src: %w['self' https://code.jquery.com https://maxcdn.bootstrapcdn.com],
-        style_src: %w['self' 'unsafe-inline' https://maxcdn.bootstrapcdn.com https://cdnjs.cloudflare.com],
+        font_src: %w['self' https://maxcdn.bootstrapcdn.com http://fonts.gstatic.com],
+        script_src: %w['self' 'unsafe-inline' http://cdnjs.cloudflare.com/ajax/libs/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js https://maxcdn.bootstrapcdn.com https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js],
+        style_src: %w['self' 'unsafe-inline' https://maxcdn.bootstrapcdn.com https://cdnjs.cloudflare.com http://fonts.googleapis.com],
         form_action: %w['self'],
         frame_ancestors: %w['none'],
         object_src: %w['none'],
