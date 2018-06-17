@@ -6,6 +6,27 @@ module Dada
   # Web controller for Dada API
   class App < Roda
     route('account') do |routing|
+      # POST /account/password/edit
+      routing.on 'password' do
+        routing.on 'edit' do
+          routing.post do
+            passwords = Form::ChangePassword.call(routing.params)
+            if passwords.failure?
+              flash[:error] = Form.message_values(passwords)
+              routing.redirect "/account/#{@current_user.username}"
+            end
+          EditPassword.new(App.config).call(@current_user,passwords)
+          flash[:notice] = "The password is changed!"
+          routing.redirect "/account/#{@current_user.username}"
+          rescue StandardError => error
+            puts "ERROR: #{error.inspect}"
+            puts error.backtrace
+            flash[:error] = 'Enter the correct old password'
+            routing.redirect "/account/#{@current_user.username}"
+          end
+        end
+      end
+
       routing.on do
         # GET /account/[username]
         routing.get String do |username|

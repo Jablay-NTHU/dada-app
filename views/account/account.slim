@@ -3,14 +3,14 @@ div class="m-grid__item m-grid__item--fluid m-wrapper"
     div class="d-flex align-items-center"
       div class="mr-auto"
         h3 class="m-subheader__title " Account Details
-        ul class="m-subheader__breadcrumbs m-nav m-nav--inline"
-          li class="m-nav__item m-nav__item--home"
-            a href="/" class="m-nav__link m-nav__link--icon"
-              i class="m-nav__link-icon la la-home"
-          li class="m-nav__separator" -
-          li class="m-nav__item"
-            a href="/project/create" class="m-nav__link"
-              span class="m-nav__link-text" Account Details
+        / ul class="m-subheader__breadcrumbs m-nav m-nav--inline"
+        /   li class="m-nav__item m-nav__item--home"
+        /     a href="/" class="m-nav__link m-nav__link--icon"
+        /       i class="m-nav__link-icon la la-home"
+        /   li class="m-nav__separator" -
+        /   li class="m-nav__item"
+        /     a href="/project/create" class="m-nav__link"
+        /       span class="m-nav__link-text" Account Details
   / END: Subheader					
   div class="m-content"
     == render('layout/flash_bar')
@@ -39,6 +39,41 @@ div class="m-grid__item m-grid__item--fluid m-wrapper"
                   label Email address:
                   input type="email" class="form-control m-input" value="#{current_user.email}" readonly="readonly"
                   / span class="m-form__help" We will never share your email with anyone else
+    
+    div class="row"
+      div class="col-lg-12"
+        / begin::Portlet
+        div class="m-portlet"
+          div class="m-portlet__head"
+            div class="m-portlet__head-caption"
+              div class="m-portlet__head-title"
+                span class="m-portlet__head-icon m--hide"
+                  i class="la la-gear"
+                h3 class="m-portlet__head-text"
+          / begin::Form
+          form class="m-form m-form--fit" method="POST" action="/account/password/edit"
+            div class="m-portlet__body"
+              div class="m-form__section m-form__section--first"
+                div class="m-form__heading"
+                  h3 class="m-form__heading-title" 2. Change The Password:
+                div class="form-group m-form__group"
+                  label Old Password
+                  input name="old_password" type="password" class="form-control m-input"
+                div class="form-group m-form__group"
+                  label New Password
+                  input name="new_password" type="password" class="form-control m-input"
+                div class="form-group m-form__group"
+                  label New Password Again
+                  input name="new_password_confirm" type="password" class="form-control m-input"
+                  / span class="m-form__help" Please enter your full name
+                div class="form-group m-form__group"
+                  button type="submit" value="Submit" id='m_change_password_submit'  class="btn btn-success" Submit
+                  button type="reset" class="btn btn-secondary" Cancel
+
+
+
+           
+                  / span class="m-form__help" We will never share your email with anyone else 
           / End::Form
         / End::Portlet
     / End::Section
