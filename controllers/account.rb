@@ -15,9 +15,9 @@ module Dada
               flash[:error] = Form.message_values(passwords)
               routing.redirect "/account/#{@current_user.username}"
             end
-          EditPassword.new(App.config).call(@current_user,passwords)
-          flash[:notice] = "The password is changed!"
-          routing.redirect "/account/#{@current_user.username}"
+            EditPassword.new(App.config).call(@current_user,passwords)
+            flash[:notice] = "The password is changed!"
+            routing.redirect "/account/#{@current_user.username}"
           rescue StandardError => error
             puts "ERROR: #{error.inspect}"
             puts error.backtrace

@@ -3,14 +3,6 @@ div class="m-grid__item m-grid__item--fluid m-wrapper"
     div class="d-flex align-items-center"
       div class="mr-auto"
         h3 class="m-subheader__title " Account Details
-        / ul class="m-subheader__breadcrumbs m-nav m-nav--inline"
-        /   li class="m-nav__item m-nav__item--home"
-        /     a href="/" class="m-nav__link m-nav__link--icon"
-        /       i class="m-nav__link-icon la la-home"
-        /   li class="m-nav__separator" -
-        /   li class="m-nav__item"
-        /     a href="/project/create" class="m-nav__link"
-        /       span class="m-nav__link-text" Account Details
   / END: Subheader					
   div class="m-content"
     == render('layout/flash_bar')
@@ -24,13 +16,11 @@ div class="m-grid__item m-grid__item--fluid m-wrapper"
               div class="m-portlet__head-title"
                 span class="m-portlet__head-icon m--hide"
                   i class="la la-gear"
-                h3 class="m-portlet__head-text"
+                h3 class="m-portlet__head-text" Basic Info:
           / begin::Form
           form class="m-form m-form--fit"
             div class="m-portlet__body"
               div class="m-form__section m-form__section--first"
-                div class="m-form__heading"
-                  h3 class="m-form__heading-title" 1. Basic Info:
                 div class="form-group m-form__group"
                   label for="example_input_full_name" Username
                   input type="email" class="form-control m-input" value="#{current_user.username}" readonly="readonly"
@@ -49,30 +39,27 @@ div class="m-grid__item m-grid__item--fluid m-wrapper"
               div class="m-portlet__head-title"
                 span class="m-portlet__head-icon m--hide"
                   i class="la la-gear"
-                h3 class="m-portlet__head-text"
+                h3 class="m-portlet__head-text" Change Password
           / begin::Form
-          form class="m-form m-form--fit" method="POST" action="/account/password/edit"
+          form class="m-form m-form--state" method="POST" action="/account/password/edit" id="form-edit-password"
             div class="m-portlet__body"
               div class="m-form__section m-form__section--first"
-                div class="m-form__heading"
-                  h3 class="m-form__heading-title" 2. Change The Password:
                 div class="form-group m-form__group"
                   label Old Password
-                  input name="old_password" type="password" class="form-control m-input"
+                  input name="old_password" type="password" class="form-control m-input m-input-danger" id="old-password-edit-input"
+                  div class="form-control-feedback old-password" style="display:none" Success! You've done it.
                 div class="form-group m-form__group"
                   label New Password
-                  input name="new_password" type="password" class="form-control m-input"
+                  input name="new_password" type="password" autocomplete="off" class="form-control m-input" id="new-password-edit-input"
+                  div class="form-control-feedback new-password" style="display:none" Success! You've done it.
                 div class="form-group m-form__group"
                   label New Password Again
-                  input name="new_password_confirm" type="password" class="form-control m-input"
+                  input name="new_password_confirm" type="password" autocomplete="off" class="form-control m-input" id="new-password-confirm-edit-input"
+                  div class="form-control-feedback new-password-confirm" style="display:none" Success! You've done it.
                   / span class="m-form__help" Please enter your full name
                 div class="form-group m-form__group"
-                  button type="submit" value="Submit" id='m_change_password_submit'  class="btn btn-success" Submit
+                  button type="submit" value="Submit" id='m_change_password_submit' class="btn btn-success" Submit
                   button type="reset" class="btn btn-secondary" Cancel
-
-
-
-           
                   / span class="m-form__help" We will never share your email with anyone else 
           / End::Form
         / End::Portlet
