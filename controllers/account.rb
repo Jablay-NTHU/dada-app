@@ -49,24 +49,16 @@ module Dada
           routing.on 'forget_password' do
             # POST account/[token]/forget_password
             routing.post do
-              puts "5#{token}"
               passwords = Form::Passwords.call(routing.params)
-              puts "6#{passwords}"
               if passwords.failure?
                 flash[:error] = Form.message_values(passwords)
                 routing.redirect "/auth/#{token}/forget_password"
               end
 
               current_email = SecureMessage.decrypt(token)
-<<<<<<< HEAD
 
               ChangePassword.new(App.config).call(
                 email: current_email['email'],
-=======
-              CreateAccount.new(App.config).call(
-                email: new_account['email'],
-                username: new_account['username'],
->>>>>>> 28937c21bf423263468358286a829f5c47c3e189
                 password: routing.params['password']
               )
               flash[:notice] = 'Password Reset! Please login'
