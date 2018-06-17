@@ -26,7 +26,7 @@ div class="m-grid__item m-grid__item--fluid m-wrapper"
                   h3 class="m-portlet__head-text" New API Request Form
             / begin::Form
             div class="m-portlet__body"
-              input type="text" name="header-parameter" id="header-parameter-input" class="form-control m-input" placeholder="enter parameter"
+              / input type="text" name="header-parameter" id="header-parameter-input" class="form-control m-input" placeholder="enter parameter"
               div class="m-form__section m-form__section--first"
                 div class="m-form__heading"
                   h3 class="m-form__heading-title" 1. Request Info:
@@ -56,20 +56,22 @@ div class="m-grid__item m-grid__item--fluid m-wrapper"
                     tbody
                       tr
                         td 
-                          input type="text" name="header[]['key']" class="form-control m-input header-key" placeholder="Key" value="Accept"     
+                          input type="text" name="header[]['key']" class="form-control m-input header-key" placeholder="Key" 
+                          / value="Accept"     
                         td
-                          input type="text" name="header[]['value']" class="form-control m-input header-value" placeholder="Value" value="application/vnd.github.v3+json"
-                        td
-                          a href="#" role="button" class="m-nav__link remove-header"
-                            i class="m-nav__link-icon flaticon-delete-1"
-                      tr
-                        td 
-                          input type="text" name="header[]['key']" class="form-control m-input header-key" placeholder="Key" value="Authorization"    
-                        td
-                          input type="text" name="header[]['value']" class="form-control m-input header-value" placeholder="Value"
+                          input type="text" name="header[]['value']" class="form-control m-input header-value" placeholder="Value" 
+                          / value="application/vnd.github.v3+json"
                         td
                           a href="#" role="button" class="m-nav__link remove-header"
                             i class="m-nav__link-icon flaticon-delete-1"
+                      / tr
+                      /   td 
+                      /     input type="text" name="header[]['key']" class="form-control m-input header-key" placeholder="Key" value="Authorization"    
+                      /   td
+                      /     input type="text" name="header[]['value']" class="form-control m-input header-value" placeholder="Value"
+                      /   td
+                      /     a href="#" role="button" class="m-nav__link remove-header"
+                      /       i class="m-nav__link-icon flaticon-delete-1"
               div class="m-form__section m-form__section--second"
                 div class="m-form__heading"
                   h3 class="m-form__heading-title" 2. Request Scheduled Info:

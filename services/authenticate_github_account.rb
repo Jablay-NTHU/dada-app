@@ -20,7 +20,7 @@ module Dada
       challenge_response =
         HTTP.headers(accept: 'application/json')
             .post(@config.GH_TOKEN_URL,
-                  form: { client_id: @config.GH_CLIENT_ID,
+                  json: { client_id: @config.GH_CLIENT_ID,
                           client_secret: @config.GH_CLIENT_SECRET,
                           code: code })
 
@@ -29,9 +29,12 @@ module Dada
     end
 
     def get_sso_account_from_api(access_token)
+      sso_info = { access_token: access_token }
+      signed_sso_info = SecureMessage.sign(sso_info)
+
       response =
         HTTP.post("#{@config.API_URL}/auth/authenticate/sso_account",
-                  json: { access_token: access_token })
+                  json: signed_sso_info)
       response.code == 200 ? response.parse : nil
     end
   end
