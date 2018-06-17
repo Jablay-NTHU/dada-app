@@ -6,6 +6,27 @@ module Dada
   # Web controller for Dada API
   class App < Roda
     route('account') do |routing|
+      # POST /account/password/edit
+      routing.on 'password' do
+        routing.on 'edit' do
+          routing.post do
+            passwords = Form::ChangePassword.call(routing.params)
+            if passwords.failure?
+              flash[:error] = Form.message_values(passwords)
+              routing.redirect "/account/#{@current_user.username}"
+            end
+            EditPassword.new(App.config).call(@current_user,passwords)
+            flash[:notice] = "The password is changed!"
+            routing.redirect "/account/#{@current_user.username}"
+          rescue StandardError => error
+            puts "ERROR: #{error.inspect}"
+            puts error.backtrace
+            flash[:error] = 'Enter the correct old password'
+            routing.redirect "/account/#{@current_user.username}"
+          end
+        end
+      end
+
       routing.on do
         # GET /account/[username]
         routing.get String do |username|
@@ -49,24 +70,16 @@ module Dada
           routing.on 'forget_password' do
             # POST account/[token]/forget_password
             routing.post do
-              puts "5#{token}"
               passwords = Form::Passwords.call(routing.params)
-              puts "6#{passwords}"
               if passwords.failure?
                 flash[:error] = Form.message_values(passwords)
                 routing.redirect "/auth/#{token}/forget_password"
               end
 
               current_email = SecureMessage.decrypt(token)
-<<<<<<< HEAD
 
               ChangePassword.new(App.config).call(
                 email: current_email['email'],
-=======
-              CreateAccount.new(App.config).call(
-                email: new_account['email'],
-                username: new_account['username'],
->>>>>>> 28937c21bf423263468358286a829f5c47c3e189
                 password: routing.params['password']
               )
               flash[:notice] = 'Password Reset! Please login'
