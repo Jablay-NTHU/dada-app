@@ -171,7 +171,7 @@ module Dada
       routing.on String do |reset_password_token|
         routing.on 'forget_password' do
           routing.get do
-            flash.now[:notice] = 'Password Reset! Please create new password'
+            flash.now[:notice] = 'Please create new password'
             reset_email = SecureMessage.decrypt(reset_password_token)
             puts "#{reset_email}"
             view 'auth/reset_password',

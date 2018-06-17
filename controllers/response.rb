@@ -11,7 +11,7 @@ module Dada
         routing.on String do |req_id|
           routing.get do
             routing.redirect '/' unless @current_user
-            view '/response/response_detail', 
+            view '/response/response_detail',
                  locals: { current_user: @current_user }
           end
         end
@@ -21,7 +21,7 @@ module Dada
         # GET /request/create
         routing.get do
           routing.redirect '/' unless @current_user
-          view '/response/response_export', 
+          view '/response/response_export',
                locals: { current_user: @current_user }
         end
       end

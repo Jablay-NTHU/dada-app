@@ -66,14 +66,6 @@ module Dada
           routing.on 'edit' do
             routing.post do
               "#{routing.params}"
-            #   DeleteRequest.new(App.config).call(@current_user, req_id)
-            #   flash[:notice] = 'Request has been succesfully edited'
-            #   routing.redirect '/'
-            # rescue StandardError => error
-            #   puts "ERROR DELETING PROJECT: #{error.inspect}"
-            #   puts error.backtrace
-            #   flash[:error] = 'Request cannot be deleted: please try again'
-            #   routing.redirect '/'
             end
           end
 
