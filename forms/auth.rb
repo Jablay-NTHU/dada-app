@@ -7,6 +7,10 @@ module Dada
     USERNAME_REGEX = /^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$/
     EMAIL_REGEX = /@/
 
+    ValidEmail = Dry::Validation.Params do
+      required(:email).filled(format?: EMAIL_REGEX)
+    end
+
     LoginCredentials = Dry::Validation.Params do
       required(:username).filled
       required(:password).filled
@@ -29,6 +33,8 @@ module Dada
           StringSecurity.entropy(string) >= 3.0
         end
       end
+
+
 
       required(:password).filled
       required(:password_confirm).filled

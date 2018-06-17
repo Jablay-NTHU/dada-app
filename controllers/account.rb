@@ -16,35 +16,63 @@ module Dada
           end
         end
 
-        routing.post String do |registration_token|
-          # raise 'Passwords do not match or empty' if
-          #   routing.params['password'].empty? ||
-          #   routing.params['password'] != routing.params['password_confirm']
+        routing.on String do |token|
+          routing.on 'registration_confirm' do
+            # POST account/[token]/registration_confirm
+            routing.post do
+              passwords = Form::Passwords.call(routing.params)
+              if passwords.failure?
+                flash[:error] = Form.message_values(passwords)
+                routing.redirect "/auth/#{token}/register"
+              end
 
-          passwords = Form::Passwords.call(routing.params)
-          if passwords.failure?
-            flash[:error] = Form.message_values(passwords)
-            routing.redirect "/auth/register/#{registration_token}"
+              new_account = SecureMessage.decrypt(token)
+              CreateAccount.new(App.config).call(
+                email: new_account['email'],
+                username: new_account['username'],
+                password: routing.params['password']
+              )
+              flash[:notice] = 'Account created! Please login'
+              routing.redirect '/auth/login'
+            rescue CreateAccount::InvalidAccount => error
+              puts error.backtrace
+              flash[:error] = error.message
+              routing.redirect '/auth/register'
+            rescue StandardError => error
+              puts error.backtrace
+              flash[:error] = error.message
+              routing.redirect(
+                "#{App.config.APP_URL}/auth/register/#{token}"
+              )
+            end
           end
+          routing.on 'forget_password' do
+            # POST account/[token]/forget_password
+            routing.post do
+              puts "5#{token}"
+              passwords = Form::Passwords.call(routing.params)
+              puts "6#{passwords}"
+              if passwords.failure?
+                flash[:error] = Form.message_values(passwords)
+                routing.redirect "/auth/#{token}/forget_password"
+              end
 
-          new_account = SecureMessage.decrypt(registration_token)
-          CreateAccount.new(App.config).call(
-            email: new_account['email'],
-            username: new_account['username'],
-            password: routing.params['password']
-          )
-          flash[:notice] = 'Account created! Please login'
-          routing.redirect '/auth/login'
-        rescue CreateAccount::InvalidAccount => error
-          puts error.backtrace
-          flash[:error] = error.message
-          routing.redirect '/auth/register'
-        rescue StandardError => error
-          puts error.backtrace
-          flash[:error] = error.message
-          routing.redirect(
-            "#{App.config.APP_URL}/auth/register/#{registration_token}"
-          )
+              current_email = SecureMessage.decrypt(token)
+<<<<<<< HEAD
+
+              ChangePassword.new(App.config).call(
+                email: current_email['email'],
+=======
+              CreateAccount.new(App.config).call(
+                email: new_account['email'],
+                username: new_account['username'],
+>>>>>>> 28937c21bf423263468358286a829f5c47c3e189
+                password: routing.params['password']
+              )
+              flash[:notice] = 'Password Reset! Please login'
+              routing.redirect '/auth/login'
+            end
+          end
         end
       end
     end

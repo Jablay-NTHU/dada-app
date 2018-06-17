@@ -3,11 +3,11 @@
 require 'http'
 
 # Returns an authenticated user, or nil
-class CreateAccount
+class ChangePassword
   # Error for inability of API to create account
-  class InvalidAccount < StandardError
+  class InvalidChangePassword < StandardError
     def message
-      'This account can no longer be created: please start again'
+      'This password cannot be created: please start again'
     end
   end
   def initialize(config)
@@ -17,10 +17,10 @@ class CreateAccount
   def call(account_data)
     signed_credentials = SecureMessage.sign(account_data)
     response = HTTP.post(
-      "#{@config.API_URL}/accounts/",
+      "#{@config.API_URL}/accounts/change_password",
       json: signed_credentials
     )
 
-    raise InvalidAccount unless response.code == 201
+    raise InvalidChangePassword unless response.code == 201
   end
 end

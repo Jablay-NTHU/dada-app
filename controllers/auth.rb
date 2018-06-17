@@ -20,8 +20,6 @@ module Dada
       routing.is 'sso_callback' do
         # GET /auth/sso_callback
         routing.get do
-          # puts "@@@@@@@@@@@@@@#{routing.params['code']}"
-
           sso_account = AuthenticateGithubAccount
                         .new(App.config)
                         .call(routing.params['code'])
@@ -89,6 +87,35 @@ module Dada
         end
       end
 
+      @forget_pwd = '/auth/forget_password'
+      routing.is 'forget_password' do
+        # GET /auth/forget_password
+        routing.get do
+          view 'auth/forget_password',
+                locals: { current_user: @current_user },
+                layout: { template: '/layout/layout_auth/main' }
+        end
+
+        # POST /auth/forget_password
+        routing.post do
+          flash[:params] = routing.params
+          valid_email = Form::ValidEmail.call(routing.params)
+          if valid_email.failure?
+            flash[:error] = Form.validation_errors(valid_email)
+            routing.redirect @forget_pwd
+          end
+
+          VerifyRecoveryEmail.new(App.config).call(routing.params['email'])
+          flash[:notice] = 'Please check your email inbox'
+          routing.redirect '/'
+        rescue StandardError => error
+          puts "ERROR SENDING RECOVERY EMAIL: #{error.inspect}"
+          puts error.backtrace
+          flash[:error] = 'Account detail are not valid: please check your email'
+          routing.redirect @forget_pwd
+        end
+      end
+
       @register_route = '/auth/register'
       routing.on 'register' do
         routing.is do
@@ -136,6 +163,21 @@ module Dada
                  locals: { new_account: new_account,
                            registration_token: registration_token },
                  layout: { template: '/layout/layout_auth/main' }
+          end
+        end
+      end
+
+      # /auth/[reset_password_token]/forget_password
+      routing.on String do |reset_password_token|
+        routing.on 'forget_password' do
+          routing.get do
+            flash.now[:notice] = 'Please create new password'
+            reset_email = SecureMessage.decrypt(reset_password_token)
+            puts "#{reset_email}"
+            view 'auth/reset_password',
+                locals: { reset_email: reset_email,
+                          reset_password_token: reset_password_token },
+                layout: { template: '/layout/layout_auth/main' }
           end
         end
       end
