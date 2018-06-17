@@ -58,9 +58,15 @@ module Dada
               end
 
               current_email = SecureMessage.decrypt(token)
+<<<<<<< HEAD
 
               ChangePassword.new(App.config).call(
                 email: current_email['email'],
+=======
+              CreateAccount.new(App.config).call(
+                email: new_account['email'],
+                username: new_account['username'],
+>>>>>>> 28937c21bf423263468358286a829f5c47c3e189
                 password: routing.params['password']
               )
               flash[:notice] = 'Password Reset! Please login'
