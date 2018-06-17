@@ -19,12 +19,17 @@ $(document).ready(function() {
 
   $('input.interval').change(function() { 
     val = $(this).val()
+    alert(val)
     if (val != "Once") {
       $('#date-start-div').show();
       $('#date-end-div').show();
+      $('#date-start-input').show()
+      $('#date-end-input').show()
     } else {
       $('#date-start-div').hide();
       $('#date-end-div').hide();
+      $('#date-start-input').hide()
+      $('#date-end-input').hide()
     }
     return false;
   });

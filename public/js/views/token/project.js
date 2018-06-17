@@ -35,34 +35,55 @@ $(document).ready(function() {
     $('#project_description_input_edit').val(desc);
   });
 
-  // $('#form-edit-project-detail').on('submit', function() {
-  //   name = $('#project_title_input_edit').val();
-  //   desc = $('#project_description_input_edit').val();
-
-  //   $('#project-title').text(name);
-  //   $('#project-desc').text(desc);
-
-  //   $('#modal-edit-project').modal('hide');
-  //   return false;   		
-  // });
-
   $('#request-table').on('click', 'tbody tr td a.edit-request', function() {
-    // alert('shit')
-  });
+    id = $(this).closest('tr').find('input.request-id').val();
+    title = $(this).closest('tr').find('td a.request-title').text();
+    description = $(this).closest('tr').find('td i.request-description').text();
+    interval = $(this).closest('tr').find('td.request-interval').text();
+    $('#edit_request_title_input').val(title);    
+    $('#edit_request_desc_input').val(description);    
 
-  $('#form-edit-request').on('submit', function() {
-    $('#modal-edit-request').modal('hide');
-    return false;
+    if (interval == 'once') {$('#edit-int-once').attr('checked','checked');} else {$('#edit-int-once').removeAttr('checked');}
+    if (interval == 'daily') {$('#edit-int-daily').attr('checked','checked');} else {$('#edit-int-daily').removeAttr('checked');}
+    if (interval == 'weekly') {$('#edit-int-weekly').attr('checked','checked');} else {$('#edit-int-weekly').removeAttr('checked');}
+    if (interval == 'monthly') {$('#edit-int-monthly').attr('checked','checked');} else {$('#edit-int-monthly').removeAttr('checked');}  
+
+    if (interval != "once") {
+      $('#date-start-div').show()
+      $('#date-end-div').show()
+      $('#date-start-input').show()
+      $('#date-end-input').show()
+    } else {
+      $('#date-start-div').hide()
+      $('#date-end-div').hide()
+      $('#date-start-input').hide()
+      $('#date-end-input').hide()
+    }
+
+    new_action = '/request/' + id + '/edit'
+    // // Assign the value to modal
+    $('#form-edit-request').attr('action', new_action);
+
   });
 
   $('#request-table').on('click', 'tbody tr td a.delete-request', function() {
     // Obtaining row information from token-table
-    alert('mantab')
+    // alert('mantab')
     id = $(this).closest('tr').find('input.request-id').val();
     new_action = '/request/' + id + '/delete'
     // // Assign the value to modal
     $('#form-delete-request').attr('action', new_action);
     $('#request-delete-id').attr('value', id);
+  }); 
+
+  $('#request-table').on('click', 'tbody tr td a.show-response', function() {
+    code = $(this).closest('tr').find('td input.last-body-status').val();
+    header = $(this).closest('tr').find('td input.last-body-header').val();
+    body = $(this).closest('tr').find('td input.last-body-content').val();
+    // Assign the value to modal
+    $('#status_code_input').attr('value', code);
+    document.getElementById('header_input').value = header;
+    document.getElementById('body_input').value = body;        
   }); 
 
   // $('#form-delete-request').on('submit', function() {
