@@ -123,7 +123,7 @@ module Dada
           routing.get do
             routing.redirect '/' if @current_user.logged_in?
             view '/auth/register',
-                 locals: { current_user: @current_user },
+                 locals: { current_user: @current_user},
                  layout: { template: '/layout/layout_auth/main' }
           end
 

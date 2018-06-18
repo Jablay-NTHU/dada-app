@@ -59,7 +59,7 @@ module Dada
         default_src: %w['self'],
         worker_src: %w['self'],
         connect_src: %w[wss: https:],
-        img_src: %w['self'],
+        img_src: %w['self' https://s3.amazonaws.com/dada-app/profile/],
         font_src: %w['self' https://maxcdn.bootstrapcdn.com http://fonts.gstatic.com],
         script_src: %w['self' 'unsafe-inline' http://cdnjs.cloudflare.com/ajax/libs/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js https://maxcdn.bootstrapcdn.com https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js],
         style_src: %w['self' 'unsafe-inline' https://maxcdn.bootstrapcdn.com https://cdnjs.cloudflare.com http://fonts.googleapis.com],

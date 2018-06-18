@@ -6,6 +6,22 @@ module Dada
   # Web controller for Dada API
   class App < Roda
     route('account') do |routing|
+      # POST /account/profile/edit
+      routing.on 'profile' do
+        routing.on 'edit' do
+          routing.post do
+            profile = Form::ChangeProfile.call(routing.params)
+            if profile.failure?
+              flash[:error] = Form.message_values(profile)
+              routing.redirect "/account/#{@current_user.username}"
+            end
+            EditProfile.new(App.config).call(@current_user,profile)
+            flash[:notice] = "The profile is changed!"
+            routing.redirect "/account/#{@current_user.username}"
+          end
+        end
+      end
+
       # POST /account/password/edit
       routing.on 'password' do
         routing.on 'edit' do
@@ -31,7 +47,8 @@ module Dada
         # GET /account/[username]
         routing.get String do |username|
           if @current_user && @current_user.username == username
-            view '/account/account', locals: { current_user: @current_user }
+            account = GetAccount.new(App.config).call(@current_user)
+            view '/account/account', locals: { current_user: account }
           else
             routing.redirect '/auth/login'
           end
@@ -51,7 +68,8 @@ module Dada
               CreateAccount.new(App.config).call(
                 email: new_account['email'],
                 username: new_account['username'],
-                password: routing.params['password']
+                password: routing.params['password'],
+                profile: "#{App.config.AWS_S3_URL}/#{App.config.AWS_BUCKET_NAME}/#{App.config.AWS_PROFILE_FOLDER_NAME}/default.jpg" 
               )
               flash[:notice] = 'Account created! Please login'
               routing.redirect '/auth/login'
