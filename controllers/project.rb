@@ -54,6 +54,47 @@ module Dada
 
         # /project/[proj_id]
         routing.on(String) do |proj_id|
+          @request_route = "/project/#{proj_id}"
+          routing.is 'create_request' do
+            # GET /project/create
+            routing.get do
+              routing.redirect '/' unless @current_user
+              view '/request/new_request',
+                   locals: { current_user: @current_user, action_post: @request_route },
+                   layout_opts: { locals: { projects: @projects } }
+            end
+          end
+
+          routing.is 'try' do
+            routing.post do
+              x = routing.params
+              "#{x}"
+            #   paracetamol = {}
+            #   paracetamol['title'] = routing.params['title']
+            #   paracetamol['description'] = routing.params['description']
+            #   paracetamol['api_url'] = routing.params['api_url']
+            #   paracetamol['parameters'] = routing.params['header'].to_yaml
+            #   paracetamol['interval'] = routing.params['interval']
+            #   paracetamol['status_code'] = routing.params['status_code']
+            #   paracetamol['header'] = routing.params['header_secure']
+            #   paracetamol['body'] = routing.params['body_secure']
+
+            #   # project = Form::NewProject.call(routing.params)
+            #   # if project.failure?
+            #   #   flash[:error] = Form.validation_errors(project)
+            #   #   routing.redirect '/'
+            #   # end
+            #   NewRequest.new(App.config).call(@current_user, proj_id, paracetamol)
+
+            #   flash[:notice] = 'Request has been succesfully created'
+            #   routing.redirect @request_route = "/project/#{proj_id}"
+            # rescue StandardError => error
+            #   puts "ERROR SAVING REQUEST: #{error.inspect}"
+            #   puts error.backtrace
+            #   flash[:error] = 'Request detail are not valid: please check...'
+            #   routing.redirect @request_route = "/project/#{proj_id}/create_request"
+            end
+          end
 
           # POST /project/[proj_id]/delete
           routing.on 'delete' do
