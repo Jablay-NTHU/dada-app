@@ -25,5 +25,24 @@ module Dada
         pass1.eql?(pass2)
       end
     end
+    
+    ChangeProfile = Dry::Validation.Params do
+      configure do
+        config.messages_file = File.join(__dir__, 'errors/profile.yml')
+
+        def format?(profile)
+          filename = profile[:filename]
+          profile_format = [".png",".jpg"]
+          profile_format.include?File.extname(filename)
+        end
+      end
+
+      required(:profile).filled
+
+      rule(right_format: [:profile]) do |profile|
+        profile.format?
+      end
+
+    end
   end
 end

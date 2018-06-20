@@ -20,7 +20,7 @@ class EditPassword
     response = HTTP.auth("Bearer #{user.auth_token}")
                    .post("#{@config.API_URL}/accounts/password/edit",
                     json: password)
-    puts response if response.code == 200
+    response if response.code == 200
     raise InvalidPassword unless response.code == 201
     
   end
