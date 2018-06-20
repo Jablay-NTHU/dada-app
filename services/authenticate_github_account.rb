@@ -11,7 +11,10 @@ module Dada
 
     def call(code)
       access_token = get_access_token_from_github(code)
+      # puts "access token:#{access_token}"
       get_sso_account_from_api(access_token)
+      b=get_sso_account_from_api(access_token)
+      # puts "b:  #{b}"
     end
 
     private
@@ -30,11 +33,14 @@ module Dada
 
     def get_sso_account_from_api(access_token)
       sso_info = { access_token: access_token }
+      #puts "sso info: #{sso_info}"
       signed_sso_info = SecureMessage.sign(sso_info)
+      #puts "signed= #{signed_sso_info}"
 
       response =
-        HTTP.post("#{@config.API_URL}/auth/authenticate/sso_account",
+        HTTP.post("#{@config.API_URL}/auth/authenticate/github_account",
                   json: signed_sso_info)
+      puts "response : #{response}, config= #{@config.API_URL}"
       response.code == 200 ? response.parse : nil
     end
   end

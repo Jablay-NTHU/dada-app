@@ -7,7 +7,8 @@ module Dada
   class App < Roda
     route('auth') do |routing| # rubocop:disable Metrics/BlockLength
       @login_route = '/auth/login'
-      @oauth_callback = '/auth/sso_callback'
+      @github_callback = '/auth/sso_callback/github_callback'
+      @google_callback = '/auth/sso_callback/google_callback'
 
       def gh_oauth_url(config)
         url = config.GH_OAUTH_URL
@@ -17,33 +18,74 @@ module Dada
         "#{url}?client_id=#{client_id}&scope=#{scope}"
       end
 
-      routing.is 'sso_callback' do
-        # GET /auth/sso_callback
-        routing.get do
-          sso_account = AuthenticateGithubAccount
-                        .new(App.config)
-                        .call(routing.params['code'])
+      def google_oauth_url(config)
+        url = config.GOOGLE_OAUTH_URL
+        client_id = config.GOOGLE_CLIENT_ID
+        scope = config.GOOGLE_SCOPE
+        redirect_uri = config.GOOGLE_REDIRECT_URI
 
-          # puts "#{sso_account}"
-          current_user = User.new(sso_account['account'],
-                                  sso_account['auth_token'])
-
-          Session.new(SecureSession.new(session)).set_user(current_user)
-          flash[:notice] = "Welcome #{current_user.username}!"
-          routing.redirect '/project'
-        rescue StandardError => error
-          puts error.inspect
-          puts error.backtrace
-          flash[:error] = 'Could not sign in using Github'
-          routing.redirect @login_route
-        end
+        "#{url}?client_id=#{client_id}&scope=#{scope}&response_type=code&redirect_uri=#{redirect_uri}"
       end
+
+      routing.on 'sso_callback' do
+
+        routing.is 'github_callback' do
+          # GET /auth/sso_callback/github_callback
+          routing.get do
+            sso_account = AuthenticateGithubAccount
+                          .new(App.config)
+                          .call(routing.params['code'])
+
+            # puts "!!#{sso_account}"
+            # puts "params: #{routing.params['code']}"
+            current_user = User.new(sso_account['account'],
+                                    sso_account['auth_token'])
+
+            Session.new(SecureSession.new(session)).set_user(current_user)
+            flash[:notice] = "Welcome #{current_user.username}!"
+            routing.redirect '/project'
+          rescue StandardError => error
+            puts error.inspect
+            puts error.backtrace
+            flash[:error] = 'Could not sign in using Github'
+            routing.redirect @login_route
+          end
+        end
+
+        routing.is 'google_callback' do
+          # GET /auth/sso_callback/github_callback
+          routing.get do
+            # puts "params: #{routing.params['code']}"
+            # puts "config: #{App.config}"
+            sso_account = AuthenticateGoogleAccount
+                          .new(App.config)
+                          .call(routing.params['code'])
+
+             puts "!!#{sso_account}"
+             
+            current_user = User.new(sso_account['account'],
+                                    sso_account['auth_token'])
+
+            Session.new(SecureSession.new(session)).set_user(current_user)
+            flash[:notice] = "Welcome #{current_user.username}!"
+            routing.redirect '/project'
+          rescue StandardError => error
+            puts error.inspect
+            puts error.backtrace
+            flash[:error] = 'Could not sign in using Google Sign-In'
+            routing.redirect @login_route
+          end
+        end
+
+      end
+
       routing.is 'login' do
         # GET /auth/login
         routing.get do
           routing.redirect '/' if @current_user.logged_in?
           view '/auth/login',
-               locals: { gh_oauth_url: gh_oauth_url(App.config) },
+               locals: { gh_oauth_url: gh_oauth_url(App.config),
+                         google_oauth_url: google_oauth_url(App.config) },
                layout: { template: '/layout/layout_auth/main' }
         end
 
