@@ -27,6 +27,9 @@ gem 'http'
 gem 'redis'
 gem 'redis-rack'
 
+# s3
+gem 'aws-sdk-s3'
+
 group :test do
   gem 'minitest'
   gem 'minitest-rg'

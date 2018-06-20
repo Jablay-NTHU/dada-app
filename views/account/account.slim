@@ -23,11 +23,11 @@ div class="m-grid__item m-grid__item--fluid m-wrapper"
               div class="m-form__section m-form__section--first"
                 div class="form-group m-form__group"
                   label for="example_input_full_name" Username
-                  input type="email" class="form-control m-input" value="#{current_user.username}" readonly="readonly"
+                  input type="email" class="form-control m-input" value="#{current_user["username"]}" readonly="readonly"
                   / span class="m-form__help" Please enter your full name
                 div class="form-group m-form__group"
                   label Email address:
-                  input type="email" class="form-control m-input" value="#{current_user.email}" readonly="readonly"
+                  input type="email" class="form-control m-input" value="#{current_user["email"]}" readonly="readonly"
                   / span class="m-form__help" We will never share your email with anyone else
     
     div class="row"
@@ -61,6 +61,29 @@ div class="m-grid__item m-grid__item--fluid m-wrapper"
                   button type="submit" value="Submit" id='m_change_password_submit' class="btn btn-success" Submit
                   button type="reset" class="btn btn-secondary" Cancel
                   / span class="m-form__help" We will never share your email with anyone else 
+    div class="row"
+      div class="col-lg-12"
+        / begin::Portlet
+        div class="m-portlet"
+          div class="m-portlet__head"
+            div class="m-portlet__head-caption"
+              div class="m-portlet__head-title"
+                span class="m-portlet__head-icon m--hide"
+                  i class="la la-gear"
+                h3 class="m-portlet__head-text" Change Profile
+          / begin::Form
+          form class="m-form m-form--state" method="POST" action="/account/profile/edit" Enctype="Multipart/Form-Data" id="form-edit-profile"
+            div class="m-portlet__body"
+              div class="m-form__section m-form__section--first"
+                div class="form-group m-form__group"
+                  img src="#{current_user["profile"]}" alt="profile" style="border-radius: 50%; width: 100px;height: 100px;border: 2px solid;"
+                div class="form-group m-form__group"
+                  label Profile photo
+                  input name="profile" type="File" class="form-control m-input" 
+                div class="form-group m-form__group"
+                  button type="submit" value="Submit" id='m_change_profile_submit' class="btn btn-success" Submit
+                  / span class="m-form__help" We will never share your email with anyone else 
+
           / End::Form
         / End::Portlet
     / End::Section
