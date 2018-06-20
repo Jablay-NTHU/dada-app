@@ -4,22 +4,9 @@ div class="m-grid__item m-grid__item--fluid m-wrapper"
       div class="mr-auto"
         input type="hidden" value="#{project.id}" id="project-id"
         h3 class="m-subheader__title m-subheader__title" id="project-title" == "#{project.title}"
-        / h3 class="m-subheader__title m-subheader__title--separator" == "#{project.title} : All Requests"
-        / ul class="m-subheader__breadcrumbs m-nav m-nav--inline"
-        /   li class="m-nav__item m-nav__item--home"
-        /     a href="/" class="m-nav__link m-nav__link--icon"
-        /       i class="m-nav__link-icon la la-home"
-        /   li class="m-nav__separator" -
-        /   li class="m-nav__item"
-        /     a href="/" class="m-nav__link"
-        /       span class="m-nav__link-text" == "#{project.title}"      
-        /   li class="m-nav__separator" -
-        /   li class="m-nav__item"
-        /     a href="" class="m-nav__link"
-        /       span class="m-nav__link-text" All Request
       div
         - if project.policies.can_add_requests
-          a class="m-btn--align-right m-btn--pill btn btn-danger" href="/request/create" role="button"
+          a class="m-btn--align-right m-btn--pill btn btn-danger" href="/project/#{project.id}/create_request" role="button"
             i class="m-btn-icon flaticon-file-1"
             span class="m-btn-text" &nbsp Create New Request
       span &nbsp;&nbsp;
@@ -122,12 +109,6 @@ div class="m-grid__item m-grid__item--fluid m-wrapper"
             / begin::Section
             div class="m-section"
               div class="m-section__content"
-                / div class="row"
-                /   div class="col-lg-12"
-                /     - if project.policies.can_add_collaborators
-                /       a class="m-btn--align-right m-btn--pill btn btn-danger" href="#" role="button"
-                /         i class="m-btn-icon flaticon-file-1" 
-                /         span &nbsp; New Collaborator
                 div class="row"
                 - if project.policies.can_add_collaborators
                     div class="col-lg-12"
@@ -141,12 +122,6 @@ div class="m-grid__item m-grid__item--fluid m-wrapper"
                               input class="form-control m-input" name="email" id="add-collaborator-input" type="text" placeholder="Enter collaborator email"
                           div class="m-form__actions m-form__actions--solid"
                             button class="m-btn btn btn-danger" type="submit" id="add-collab" Add
-                          / div class="col-lg-4 col-md-9 col-sm-12"
-                            / div class="m-typeahead"
-                              / input class="form-control m-input" id="m_typeahead_1" type="text" placeholder="States of USA"
-                          / div class="col-lg-4 col-md-9 col-sm-12"
-                            / a class="m-btn btn btn-danger" href="#" role="button" id="add-collaborator"
-                            / button class="m-btn btn btn-danger" type="submit" href="/project/#{project.id}/add_collaborator" id="add-collab" Add
                 table class="table table-striped m-table" id="collaborator-list"
                   thead
                     tr
