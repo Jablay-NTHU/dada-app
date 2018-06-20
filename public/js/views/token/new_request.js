@@ -2,8 +2,8 @@ $(document).ready(function() {
   $('#add-parameter-row').on('click', function() {
     $('#header-table tbody').append(
       '<tr>'+
-        '<td><input type="text" class="form-control m-input header-key" name="header-key[]" placeholder="Key"></td>'+               
-        '<td><input type="text" class="form-control m-input header-value" name="header-value[]" placeholder="Value"></td>'+   
+        '<td><input type="text" class="form-control m-input header-key" name="parameters[][\'key\']" placeholder="Key"></td>'+               
+        '<td><input type="text" class="form-control m-input header-value" name="parameters[][\'value\']" placeholder="Value"></td>'+   
         '<td><a href="#" role="button" class="m-nav__link remove-header"><i class="m-nav__link-icon flaticon-delete-1"></i></a></td>'+
       '</tr>'
     );        

@@ -32,15 +32,15 @@ div class="m-grid__item m-grid__item--fluid m-wrapper"
                   h3 class="m-form__heading-title" 1. Request Info:
                 div class="form-group m-form__group"
                   label for="request-input-title" Request's Title:
-                  input type="text" name="title" id="new_request_title_input" class="form-control m-input" placeholder="Enter Request's Title"
+                  input type="text" name="title" id="new_request_title_input" class="form-control m-input" placeholder="Enter Request's Title" required="required"
                   span class="m-form__help" Please enter your API Request's title
                 div class="form-group m-form__group"
                   label Request's Description:
-                  input type="text" name="description" id="new_request_desc_input" class="form-control m-input" placeholder="Enter Request's Description"
+                  input type="text" name="description" id="new_request_desc_input" class="form-control m-input" placeholder="Enter Request's Description" required="required"
                   span class="m-form__help" Please enter your API Request's description
                 div class="form-group m-form__group"
                   label API URL:
-                  input type="text" name="api_url" id="new_request_url_input" class="form-control m-input" placeholder="Enter API URL of the Request"
+                  input type="text" name="api_url" id="new_request_url_input" class="form-control m-input" placeholder="Enter API URL of the Request" required="required"
                   span class="m-form__help" Please enter your API Request's URL
                 div class="form-group m-form__group"
                   label Parameters: &nbsp;&nbsp;
@@ -56,10 +56,10 @@ div class="m-grid__item m-grid__item--fluid m-wrapper"
                     tbody
                       tr
                         td 
-                          input type="text" name="header[]['key']" class="form-control m-input header-key" placeholder="Key" 
+                          input type="text" name="parameters[]['key']" class="form-control m-input header-key" placeholder="Key" required="required"
                           / value="Accept"     
                         td
-                          input type="text" name="header[]['value']" class="form-control m-input header-value" placeholder="Value" 
+                          input type="text" name="parameters[]['value']" class="form-control m-input header-value" placeholder="Value" required="required"
                           / value="application/vnd.github.v3+json"
                         td
                           a href="#" role="button" class="m-nav__link remove-header"
@@ -93,10 +93,10 @@ div class="m-grid__item m-grid__item--fluid m-wrapper"
                   span class="m-form__help" For scheduled request, we will run on 00.01 Taiwan Time
                 div class="form-group m-form__group" id="date-start-div" style="display:none"
                   label for="example-date-input" Date start
-                  input class="form-control m-input" type="date" value="2018-06-12" id="date-start-input"
+                  input class="form-control m-input" type="date" name="date_start" value="2018-06-24" id="date-start-input" required="required"
                 div class="form-group m-form__group" id="date-end-div" style="display:none"
                   label for="example-date-input" Date end
-                  input class="form-control m-input" type="date" value="2018-06-12" id="date-end-input"
+                  input class="form-control m-input" type="date" name="date_end" value="2018-06-24" id="date-end-input" required="required"
             div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit"
               div class="m-form__actions m-form__actions--solid"
                 button type="submit" value="Submit" id='try-launch' class="btn btn-success" Send Request
@@ -117,11 +117,11 @@ div class="m-grid__item m-grid__item--fluid m-wrapper"
             div class="m-portlet__body"
               div class="m-form__section m-form__section--first"
                 div class="form-group m-form__group"
-                  input name="status_code" id="status-result" class="form-control m-input" readonly="readonly"
+                  input name="status_code" id="status-result" class="form-control m-input" readonly="readonly" required="required"
                 div class="form-group m-form__group"
-                  textarea name="header_secure" id="header-result" rows="25" class="form-control m-input" readonly="readonly"
+                  textarea name="header" id="header-result" rows="25" class="form-control m-input" readonly="readonly" required="required"
                 div class="form-group m-form__group"
-                  textarea name="body_secure" id="api-result" rows="25" class="form-control m-input" readonly="readonly"
+                  textarea name="body" id="api-result" rows="25" class="form-control m-input" readonly="readonly" required="required"
             div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit"
               div class="m-form__actions m-form__actions--solid"
                 button type="submit" value="Submit" id='m_create_request_submit'  class="btn btn-success" Save Request

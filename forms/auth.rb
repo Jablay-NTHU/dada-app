@@ -34,8 +34,6 @@ module Dada
         end
       end
 
-
-
       required(:password).filled
       required(:password_confirm).filled
 

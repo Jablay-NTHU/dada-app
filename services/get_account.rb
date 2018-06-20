@@ -13,6 +13,5 @@ class GetAccount
                    .get("#{@config.API_URL}/accounts")
     # puts response.parse
     response.code == 200 ? response.parse : nil
-
   end
 end

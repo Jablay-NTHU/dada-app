@@ -18,7 +18,7 @@ class NewRequest
     response = HTTP.auth("Bearer #{user.auth_token}")
                    .post("#{@config.API_URL}/projects/#{proj_id}/request",
                          json: data)
-
     raise InvalidRequest unless response.code == 201
+    response.code == 201 ? response.parse : nil
   end
 end

@@ -68,23 +68,29 @@ module Dada
           routing.is 'try' do
             routing.post do
               x = routing.params
-              "#{x}"
-              paracetamol = {}
-              paracetamol['title'] = routing.params['title']
-              paracetamol['description'] = routing.params['description']
-              paracetamol['api_url'] = routing.params['api_url']
-              paracetamol['parameters'] = routing.params['header'].to_yaml
-              paracetamol['interval'] = routing.params['interval']
-              paracetamol['status_code'] = routing.params['status_code']
-              paracetamol['header'] = routing.params['header_secure']
-              paracetamol['body'] = routing.params['body_secure']
+              request = Form::NewRequest.call(routing.params)
+              if request.failure?
+                y = Form.validation_errors(request)
+                flash[:error] = Form.validation_errors(project)
+                routing.redirect '/'
+              end
 
-            #   # project = Form::NewProject.call(routing.params)
-            #   # if project.failure?
-            #   #   flash[:error] = Form.validation_errors(project)
-            #   #   routing.redirect '/'
-            #   # end
-              NewRequest.new(App.config).call(@current_user, proj_id, paracetamol)
+              request = {}
+              request['title'] = routing.params['title']
+              request['description'] = routing.params['description']
+              request['api_url'] = routing.params['api_url']
+              request['parameters'] = routing.params['parameters'].to_yaml
+              request['interval'] = routing.params['interval']
+              request['date_start'] = routing.params['date_start']
+              request['date_end'] = routing.params['date_end']
+
+              new_req = NewRequest.new(App.config).call(@current_user, proj_id, request)
+              req_id = new_req['data']['id']
+              response = {}
+              response['status_code'] = routing.params['status_code']
+              response['header'] = routing.params['header']
+              response['body'] = routing.params['body']
+              NewResponse.new(App.config).call(@current_user, req_id, response)
 
               flash[:notice] = 'Request has been succesfully created'
               routing.redirect @request_route

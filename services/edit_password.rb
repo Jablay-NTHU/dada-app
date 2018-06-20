@@ -22,6 +22,5 @@ class EditPassword
                     json: password)
     response if response.code == 200
     raise InvalidPassword unless response.code == 201
-    
   end
 end
