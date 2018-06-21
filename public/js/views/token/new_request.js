@@ -39,8 +39,8 @@ $(document).ready(function() {
   $('#try-launch').on('click', function() {
     // just for example
     // once we success, we need to pass the header key and value from the input
-    // var api_url = 'https://api.github.com/repos/bhimasta/pinaple-sas'
-    var api_url = $('#new_request_url_input').val();
+    // var call_url = 'https://api.github.com/repos/bhimasta/pinaple-sas'
+    var call_url = $('#new_request_url_input').val();
     var PUT_HEADERS = {};
     jQuery("#header-table tbody tr").each(function() {
       key = jQuery(this).find("input.header-key").val();
@@ -57,7 +57,7 @@ $(document).ready(function() {
     $.ajax({
       type: "GET",
       dataType: 'json',
-      url: api_url,
+      url: call_url,
       crossDomain:true,      
       headers: PUT_HEADERS,
        success: function(data, textStatus, xhr)

@@ -63,10 +63,10 @@ module Dada
 
               routing.redirect '/error/404' if req_info.nil?
 
-              # puts "REQ: #{req_info}"
-              request = Request.new(req_info)
+            #   # # puts "REQ: #{req_info}"
+            #   # request = Request.new(req_info)
               view '/request/request_detail/request_detail',
-                  locals: { current_user: @current_user, request: request },
+                  locals: { current_user: @current_user, req_info: req_info },
                   layout_opts: { locals: { projects: @projects } }
             else
               routing.redirect '/auth/login'

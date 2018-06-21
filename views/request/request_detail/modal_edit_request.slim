@@ -1,0 +1,40 @@
+      / begin::Modal::DeleteRequest
+      div class="modal fade" id="modal-edit-request" tabindex="-1" role="dialog" aria-labelledby="editRequestModal" aria-hidden="true"
+        div class="modal-dialog modal-lg" role="document"
+          div class="modal-content"
+            div class="modal-header"
+              h5 class="modal-title" id="exampleModalLabel" Edit Project
+              button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                span aria-hidden="true" &times;
+            form action="/request/edit/" method="post" id="form-edit-request"
+              div class="modal-body"
+                div class="form-group m-form__group"
+                  label for="request-input-title" Request's Title:
+                  input type="text" name="title" id="edit_request_title_input" class="form-control m-input" placeholder="Enter Request's Title" required="required"
+                div class="form-group m-form__group"
+                  label Request's Description:
+                  input type="text" name="description" id="edit_request_desc_input" class="form-control m-input" placeholder="Enter Request's Description" required="required"
+                div class="form-group m-form__group"
+                  label API URL:
+                  input type="text" id="edit_request_url_input" class="form-control m-input" value="Ga tau kenapa error" readonly="readonly"
+                div class="form-group m-form__group"
+                  label Parameters: &nbsp;&nbsp;
+                  textarea id="edt_parameters_input" rows="25" class="form-control m-input" readonly="readonly" hidden
+                div class="form-group m-form__group"
+                  label for="" API Request's Interval
+                  div class=""
+                    input type="radio" id="edit-int-once" class="interval" name="interval" value="Once" Once
+                    input type="radio" id="edit-int-daily" class="interval" name="interval" value="Daily" Daily
+                    input type="radio" id="edit-int-weekly" class="interval" name="interval" value="Weekly" Weekly
+                    input type="radio" id="edit-int-monthly" class="interval" name="interval" value="Monthly" checked="checked" Monthly
+                    span class="m-form__help" For scheduled request, we will run on 00.01 Taiwan Time
+                div class="form-group m-form__group" id="date-start-div" style="display:none"
+                  label for="example-date-input" Date start
+                  input name="date_start" class="form-control m-input" type="date" value="2018-06-12" id="date-start-input"
+                div class="form-group m-form__group" id="date-end-div" style="display:none"
+                  label for="example-date-input" Date end
+                  input name="date_end" class="form-control m-input" type="date" value="2018-06-12" id="date-end-input"
+              div class="modal-footer"
+                button type="button" class="btn btn-secondary" data-dismiss="modal" Close
+                button type="submit" value="Submit" id='edit-request-button'  class="btn btn-success" Save Change
+      / end::Modal

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'roda'
-
+require 'jsonpath'
 module Dada
   # Web controller for Dada API
   class App < Roda
@@ -76,7 +76,7 @@ module Dada
               request = {}
               request['title'] = routing.params['title']
               request['description'] = routing.params['description']
-              request['api_url'] = routing.params['api_url']
+              request['call_url'] = routing.params['call_url']
               request['interval'] = routing.params['interval']
               request['date_start'] = routing.params['date_start']
               request['date_end'] = routing.params['date_end']
@@ -88,27 +88,26 @@ module Dada
               end
               # puts headers
               request['parameters'] = headers.to_yaml
-
-              # puts request['parameters'].to_yaml
-
-              # test_request = HTTP.headers(request['parameters'])
-              # .get('https://api.github.com/repos/bhimasta/pinaple-sas')
-
-              # save the response
-              # puts test_request.status
-              # puts test_request.headers.to_yaml.to_json
-              # puts test_request.body
-
-              "#{request['parameters']}"
+              # "#{request['parameters']}"
 
               new_req = NewRequest.new(App.config).call(@current_user,
                                                         proj_id, request)
 
               req_id = new_req['data']['id']
+
+              test_request = HTTP.headers(headers).get(request['call_url'])
               response = {}
-              response['status_code'] = routing.params['status_code']
-              response['header'] = routing.params['header'].to_yaml
-              response['body'] = routing.params['body']
+              response['status_code'] = test_request.code
+              response['header'] = test_request.headers.to_hash.to_yaml
+              response['body'] = test_request.body
+
+              # json = <<-HERE_DOC "#{test_request.body}"
+              # HERE_DOC
+              # puts "json: #{json.length}"
+              # path = JsonPath.new('$..owner')
+              # hasil = path.on(json)
+              # puts "json: #{hasil}"
+
               NewResponse.new(App.config).call(@current_user, req_id, response)
 
               flash[:notice] = 'Request has been succesfully created'

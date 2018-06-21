@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'roda'
+require 'jsonpath'
 
 module Dada
   # Web controller for Dada API
@@ -19,10 +20,18 @@ module Dada
 
       routing.is 'export' do
         # GET /request/create
-        routing.get do
-          routing.redirect '/' unless @current_user
-          view '/response/response_export',
-               locals: { current_user: @current_user }
+        routing.post do
+          body = routing.params['body']
+          jsonpath = routing.params['json_path']
+          json = <<-HERE_DOC "#{body}"
+          HERE_DOC
+          puts "json: #{json.length}"
+          path = JsonPath.new(jsonpath)
+          hasil = path.on(json)
+          "The magic result that I promise to you eng ing eng: #{hasil}"
+          # routing.redirect '/' unless @current_user
+          # view '/response/response_export',
+          #      locals: { current_user: @current_user }
         end
       end
       # /response/[res_id]
