@@ -25,6 +25,23 @@ module Dada
                locals: { current_user: @current_user }
         end
       end
+      # /response/[res_id]
+      routing.on String do |res_id|
+        # POST /response/[res_id]/delete
+        routing.on 'delete' do
+          routing.post do
+            response = DeleteResponse.new(App.config).call(@current_user, res_id)
+            request_id = response['data']['request']['id']
+            flash[:notice] = 'Response has been succesfully deleted'
+            routing.redirect "/request/#{request_id}"
+          rescue StandardError => error
+            puts "ERROR DELETING RESPONSE: #{error.inspect}"
+            puts error.backtrace
+            flash[:error] = 'Response cannot be deleted: please try again'
+            routing.redirect "/request/#{project_id}"
+          end
+        end
+      end
     end
   end
 end

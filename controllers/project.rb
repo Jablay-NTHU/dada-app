@@ -67,28 +67,47 @@ module Dada
 
           routing.is 'try' do
             routing.post do
-              x = routing.params
               request = Form::NewRequest.call(routing.params)
               if request.failure?
-                y = Form.validation_errors(request)
-                flash[:error] = Form.validation_errors(project)
-                routing.redirect '/'
+                flash[:error] = Form.validation_errors(request)
+                routing.redirect "/project/#{proj_id}/create_request"
               end
 
               request = {}
               request['title'] = routing.params['title']
               request['description'] = routing.params['description']
               request['api_url'] = routing.params['api_url']
-              request['parameters'] = routing.params['parameters'].to_yaml
               request['interval'] = routing.params['interval']
               request['date_start'] = routing.params['date_start']
               request['date_end'] = routing.params['date_end']
 
-              new_req = NewRequest.new(App.config).call(@current_user, proj_id, request)
+              headers = {}
+              parameters_input = routing.params['parameters']
+              (0..parameters_input.length - 1).each do |i|
+                headers[parameters_input[i]["'key'"]] = parameters_input[i]["'value'"]
+              end
+              # puts headers
+              request['parameters'] = headers.to_yaml
+
+              # puts request['parameters'].to_yaml
+
+              # test_request = HTTP.headers(request['parameters'])
+              # .get('https://api.github.com/repos/bhimasta/pinaple-sas')
+
+              # save the response
+              # puts test_request.status
+              # puts test_request.headers.to_yaml.to_json
+              # puts test_request.body
+
+              "#{request['parameters']}"
+
+              new_req = NewRequest.new(App.config).call(@current_user,
+                                                        proj_id, request)
+
               req_id = new_req['data']['id']
               response = {}
               response['status_code'] = routing.params['status_code']
-              response['header'] = routing.params['header']
+              response['header'] = routing.params['header'].to_yaml
               response['body'] = routing.params['body']
               NewResponse.new(App.config).call(@current_user, req_id, response)
 
@@ -98,7 +117,7 @@ module Dada
               puts "ERROR SAVING REQUEST: #{error.inspect}"
               puts error.backtrace
               flash[:error] = 'Request detail are not valid: please check...'
-              routing.redirect "#{@request_route}/create_request"
+              routing.redirect "/project/#{proj_id}/create_request"
             end
           end
 

@@ -1,9 +1,11 @@
 $(document).ready(function() {  
   $('#add-parameter-row').on('click', function() {
+    key = "parameters[]['key']"
+    val = "parameters[]['value']"
     $('#header-table tbody').append(
       '<tr>'+
-        '<td><input type="text" class="form-control m-input header-key" name="parameters[][\'key\']" placeholder="Key"></td>'+               
-        '<td><input type="text" class="form-control m-input header-value" name="parameters[][\'value\']" placeholder="Value"></td>'+   
+        '<td><input type="text" class="form-control m-input header-key" name="'+key+'" placeholder="Key"></td>'+               
+        '<td><input type="text" class="form-control m-input header-value" name="'+val+'" placeholder="Value"></td>'+   
         '<td><a href="#" role="button" class="m-nav__link remove-header"><i class="m-nav__link-icon flaticon-delete-1"></i></a></td>'+
       '</tr>'
     );        
