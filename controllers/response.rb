@@ -27,8 +27,8 @@ module Dada
           HERE_DOC
           puts "json: #{json.length}"
           path = JsonPath.new(jsonpath)
-          hasil = path.on(json)
-          "The magic result that I promise to you eng ing eng: #{hasil}"
+          result = path.on(json)
+          "<p>The magic result that I promise to you eng ing eng: #{result} <br/> 1. You need to modify the body of the api using json path that we input </br> 2. If the result show nothing, show error </br> 3. If the result show something, download --> YAML file</p>"
           # routing.redirect '/' unless @current_user
           # view '/response/response_export',
           #      locals: { current_user: @current_user }
