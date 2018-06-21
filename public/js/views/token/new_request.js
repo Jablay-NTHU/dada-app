@@ -1,9 +1,11 @@
 $(document).ready(function() {  
   $('#add-parameter-row').on('click', function() {
+    key = "parameters[]['key']"
+    val = "parameters[]['value']"
     $('#header-table tbody').append(
       '<tr>'+
-        '<td><input type="text" class="form-control m-input header-key" name="parameters[][\'key\']" placeholder="Key"></td>'+               
-        '<td><input type="text" class="form-control m-input header-value" name="parameters[][\'value\']" placeholder="Value"></td>'+   
+        '<td><input type="text" class="form-control m-input header-key" name="'+key+'" placeholder="Key"></td>'+               
+        '<td><input type="text" class="form-control m-input header-value" name="'+val+'" placeholder="Value"></td>'+   
         '<td><a href="#" role="button" class="m-nav__link remove-header"><i class="m-nav__link-icon flaticon-delete-1"></i></a></td>'+
       '</tr>'
     );        
@@ -37,8 +39,8 @@ $(document).ready(function() {
   $('#try-launch').on('click', function() {
     // just for example
     // once we success, we need to pass the header key and value from the input
-    // var api_url = 'https://api.github.com/repos/bhimasta/pinaple-sas'
-    var api_url = $('#new_request_url_input').val();
+    // var call_url = 'https://api.github.com/repos/bhimasta/pinaple-sas'
+    var call_url = $('#new_request_url_input').val();
     var PUT_HEADERS = {};
     jQuery("#header-table tbody tr").each(function() {
       key = jQuery(this).find("input.header-key").val();
@@ -55,7 +57,7 @@ $(document).ready(function() {
     $.ajax({
       type: "GET",
       dataType: 'json',
-      url: api_url,
+      url: call_url,
       crossDomain:true,      
       headers: PUT_HEADERS,
        success: function(data, textStatus, xhr)

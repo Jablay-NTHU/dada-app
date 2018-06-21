@@ -2,7 +2,7 @@ en:
   errors:
     title: 'must be provided'
     description: 'must be provided'
-    api_url: 'must be provided'
+    call_url: 'must be provided'
     parameters: 'must be provided'
     interval: 'must be provided'
     date_start: 'must be provided'

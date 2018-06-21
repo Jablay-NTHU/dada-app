@@ -18,48 +18,35 @@ module Dada
           end
         end
 
-        routing.is 'try' do
-          routing.post do
-            x = routing.params
-            paracetamol = {}
-            paracetamol['title'] = routing.params['title']
-            paracetamol['description'] = routing.params['description']
-            paracetamol['api_url'] = routing.params['api_url']
-            paracetamol['parameters'] = routing.params['header'].to_yaml
-            paracetamol['interval'] = routing.params['interval']
-            paracetamol['status_code'] = routing.params['status_code']
-            paracetamol['header'] = routing.params['header_secure'].to_yaml
-            paracetamol['body'] = routing.params['body_secure'].to_yaml
-
-            # project = Form::NewProject.call(routing.params)
-            # if project.failure?
-            #   flash[:error] = Form.validation_errors(project)
-            #   routing.redirect '/'
-            # end
-            NewRequest.new(App.config).call(@current_user, '3', paracetamol)
-
-            flash[:notice] = 'Request has been succesfully edited'
-            routing.redirect '/project/3'
-          rescue StandardError => error
-            puts "ERROR SAVING REQUEST: #{error.inspect}"
-            puts error.backtrace
-            flash[:error] = 'Request detail are not valid: please check...'
-            routing.redirect '/request/create'
-          end
-        end
-
         # POST /requests/[req_id]/delete
         routing.on String do |req_id|
+          # GET /response/[res_id]/add_response
+          routing.on 'add_response' do
+            routing.get do
+              response = CallApiNow.new(App.config).call(@current_user, req_id)
+              # "calling the api now #{response}"
+              request_id = response['data']['id']
+              flash[:notice] = 'New Api Call has been succesfully done'
+              routing.redirect "/request/#{request_id}"
+            rescue StandardError => error
+              puts "ERROR DELETING RESPONSE: #{error.inspect}"
+              puts error.backtrace
+              flash[:error] = 'There something wrong with Api Call: please try again'
+              routing.redirect "/request/#{project_id}"
+            end
+          end
+
           routing.on 'delete' do
             routing.post do
-              DeleteRequest.new(App.config).call(@current_user, req_id)
+              request = DeleteRequest.new(App.config).call(@current_user, req_id)
+              project_id = request['data']['project']['id']
               flash[:notice] = 'Request has been succesfully deleted'
-              routing.redirect '/'
+              routing.redirect "/project/#{project_id}"
             rescue StandardError => error
               puts "ERROR DELETING PROJECT: #{error.inspect}"
               puts error.backtrace
               flash[:error] = 'Request cannot be deleted: please try again'
-              routing.redirect '/'
+              routing.redirect "/project/#{project_id}"
             end
           end
 
@@ -76,10 +63,10 @@ module Dada
 
               routing.redirect '/error/404' if req_info.nil?
 
-              # puts "REQ: #{req_info}"
-              request = Request.new(req_info)
-              view '/request/request_detail',
-                  locals: { current_user: @current_user, request: request },
+            #   # # puts "REQ: #{req_info}"
+            #   # request = Request.new(req_info)
+              view '/request/request_detail/request_detail',
+                  locals: { current_user: @current_user, req_info: req_info },
                   layout_opts: { locals: { projects: @projects } }
             else
               routing.redirect '/auth/login'

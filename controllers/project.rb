@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'roda'
-
+require 'jsonpath'
 module Dada
   # Web controller for Dada API
   class App < Roda
@@ -67,29 +67,47 @@ module Dada
 
           routing.is 'try' do
             routing.post do
-              x = routing.params
               request = Form::NewRequest.call(routing.params)
               if request.failure?
-                y = Form.validation_errors(request)
-                flash[:error] = Form.validation_errors(project)
-                routing.redirect '/'
+                flash[:error] = Form.validation_errors(request)
+                routing.redirect "/project/#{proj_id}/create_request"
               end
 
               request = {}
               request['title'] = routing.params['title']
               request['description'] = routing.params['description']
-              request['api_url'] = routing.params['api_url']
-              request['parameters'] = routing.params['parameters'].to_yaml
+              request['call_url'] = routing.params['call_url']
               request['interval'] = routing.params['interval']
               request['date_start'] = routing.params['date_start']
               request['date_end'] = routing.params['date_end']
 
-              new_req = NewRequest.new(App.config).call(@current_user, proj_id, request)
+              headers = {}
+              parameters_input = routing.params['parameters']
+              (0..parameters_input.length - 1).each do |i|
+                headers[parameters_input[i]["'key'"]] = parameters_input[i]["'value'"]
+              end
+              # puts headers
+              request['parameters'] = headers.to_yaml
+              # "#{request['parameters']}"
+
+              new_req = NewRequest.new(App.config).call(@current_user,
+                                                        proj_id, request)
+
               req_id = new_req['data']['id']
+
+              test_request = HTTP.headers(headers).get(request['call_url'])
               response = {}
-              response['status_code'] = routing.params['status_code']
-              response['header'] = routing.params['header']
-              response['body'] = routing.params['body']
+              response['status_code'] = test_request.code
+              response['header'] = test_request.headers.to_hash.to_yaml
+              response['body'] = test_request.body
+
+              # json = <<-HERE_DOC "#{test_request.body}"
+              # HERE_DOC
+              # puts "json: #{json.length}"
+              # path = JsonPath.new('$..owner')
+              # hasil = path.on(json)
+              # puts "json: #{hasil}"
+
               NewResponse.new(App.config).call(@current_user, req_id, response)
 
               flash[:notice] = 'Request has been succesfully created'
@@ -98,7 +116,7 @@ module Dada
               puts "ERROR SAVING REQUEST: #{error.inspect}"
               puts error.backtrace
               flash[:error] = 'Request detail are not valid: please check...'
-              routing.redirect "#{@request_route}/create_request"
+              routing.redirect "/project/#{proj_id}/create_request"
             end
           end
 

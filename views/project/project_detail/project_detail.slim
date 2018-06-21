@@ -51,7 +51,7 @@ div class="m-grid__item m-grid__item--fluid m-wrapper"
           div class="m-portlet__head"
             div class="m-portlet__head-caption"
               div class="m-portlet__head-title"
-                h3 class="m-portlet__head-text" Request List {Make the list like list of tests in codeship??}
+                h3 class="m-portlet__head-text" Request List
           div class="m-portlet__body"
             / begin::Section
             div class="m-section"
@@ -76,15 +76,17 @@ div class="m-grid__item m-grid__item--fluid m-wrapper"
                         td style="width:10%" class="request-interval" #{request.interval}
                         td style="width:20%"
                           - if request.updated_at
-                            input type="hidden" class="last-body-status" value="#{request.responses.last.status_code}"
-                            input type="hidden" class="last-body-header" value="#{request.responses.last.header}"
-                            input type="hidden" class="last-body-content" value="#{request.responses.last.body}"
-                            a href="#" role="button" class="show-response" data-toggle="modal" data-target="#modal-show-response" == "#{request.updated_at}"
+                            - if !request.responses.last.nil?
+                                input type="hidden" class="last-body-status" value="#{request.responses.last.status_code}"
+                                input type="hidden" class="last-body-header" value="#{request.responses.last.header}"
+                                input type="hidden" class="last-body-content" value="#{request.responses.last.body}"
+                                a href="#" role="button" class="show-response" data-toggle="modal" data-target="#modal-show-response" == "#{request.updated_at}"
                           - else
-                            input type="hidden" class="last-body-status" value="#{request.responses.last.status_code}"
-                            input type="hidden" class="last-body-header" value="#{request.responses.last.header}"
-                            input type="hidden" class="last-body-content" value="#{request.responses.last.body}"
-                            a href="#" role="button" class="show-response" data-toggle="modal" data-target="#modal-show-response" == "#{request.created_at}"
+                            - if !request.responses.last.nil?
+                                input type="hidden" class="last-body-status" value="#{request.responses.last.status_code}"
+                                input type="hidden" class="last-body-header" value="#{request.responses.last.header}"
+                                input type="hidden" class="last-body-content" value="#{request.responses.last.body}"
+                                a href="#" role="button" class="show-response" data-toggle="modal" data-target="#modal-show-response" == "#{request.created_at}"
                         td style="width:20%"
                           - if request.updated_at
                             == "#{request.updated_at}"
@@ -104,7 +106,7 @@ div class="m-grid__item m-grid__item--fluid m-wrapper"
           div class="m-portlet__head"
             div class="m-portlet__head-caption"
               div class="m-portlet__head-title"
-                h3 class="m-portlet__head-text" Collaborator List {Will move to modal box next week}
+                h3 class="m-portlet__head-text" Collaborator List
           div class="m-portlet__body"
             / begin::Section
             div class="m-section"

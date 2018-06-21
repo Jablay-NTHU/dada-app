@@ -11,7 +11,7 @@ module Dada
 
       required(:title).filled
       required(:description).filled
-      required(:api_url).filled
+      required(:call_url).filled
       required(:parameters).filled(:array?)
       required(:interval).filled
       required(:date_start).maybe
