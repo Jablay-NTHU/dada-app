@@ -46,6 +46,7 @@ module Dada
       routing.on do
         # GET /account/[username]
         routing.get String do |username|
+          # puts @current_user
           if @current_user && @current_user.username == username
             account = GetAccount.new(App.config).call(@current_user)
             view '/account/account', locals: { current_user: account }
