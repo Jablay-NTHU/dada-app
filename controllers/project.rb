@@ -8,13 +8,13 @@ module Dada
     route('project') do |routing|
       routing.on do
         routing.is do
-          # GET /projects/
+          # GET /project/
           routing.get do
             if @current_user.logged_in?
               # project_list = GetAllProjects.new(App.config).call(@current_user)
               # projects = Projects.new(project_list)
               view '/project/project_list/project_list',
-                   locals: { current_user: @current_user, projects: @projects },
+                   locals: { current_user: @current_user, projects: @projects ,account: @account},
                    layout_opts: { locals: { projects: @projects } }
             else
               routing.redirect '/auth/login'
