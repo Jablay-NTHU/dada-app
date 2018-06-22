@@ -71,11 +71,11 @@ div class="m-grid__item m-grid__item--fluid m-wrapper"
                     - req_info.responses.each do |response|
                       tr id="request-#{response.id}"
                         input type="hidden" class="response-id" value="#{response.id}"
-                        input type="hidden" class="response-status" value="#{response.status_code}"
-                        input type="hidden" class="response-header" value="#{response.header}"
-                        input type="hidden" class="response-body" value="#{response.body}"
+                        input type="hidden" class="inner_response_status_code" value="#{response.status_code}"
+                        input type="hidden" class="inner_response_header" value="#{response.header}"
+                        input type="hidden" class="inner_response_body" value="#{response.body}"
                         td 
-                          a href="/request/#{response.id}" == "#{response.created_at}"
+                          == "#{response.created_at}"
                         td #{response.status_code}
                         td
                           - if req_info.policies.can_view_response

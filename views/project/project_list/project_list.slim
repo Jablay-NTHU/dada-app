@@ -31,10 +31,6 @@ div class="m-grid__item m-grid__item--fluid m-wrapper"
                               input type="hidden" class="project-id" value="#{proj.id}"
                               li class="m-nav__section m-nav__section--first"
                                 span class="m-nav__section-text" Quick Actions
-                              li class="m-nav__item"
-                                a href="#" role="button" class="m-nav__link" data-toggle="modal" data-target="#modal-manage-collaborators"
-                                  i class="m-nav__link-icon flaticon-users"
-                                  span class="m-nav__link-text" Collaborators
                               - if proj.policies.can_edit
                                 li class="m-nav__item"
                                   a href="#" role="button" class="m-nav__link edit-project" data-toggle="modal" data-target="#modal-edit-project"
@@ -70,7 +66,6 @@ div class="m-grid__item m-grid__item--fluid m-wrapper"
               / end::Widget 7
           / end:: Widgets/Announcements 1
       / End::Section
-      include :modal_manage_collaborators
       include :modal_new_project
       include :modal_edit_project
       include :modal_delete_project
