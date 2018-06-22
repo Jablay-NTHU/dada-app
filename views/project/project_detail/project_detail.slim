@@ -68,6 +68,10 @@ div class="m-grid__item m-grid__item--fluid m-wrapper"
                     - project.requests.each do |request|
                       tr id="request-#{request.id}"
                         input type="hidden" class="request-id" value="#{request.id}"
+                        input type="hidden" class="request-url" value="#{request.call_url}"
+                        input type="hidden" class="request-date-start" value="#{request.date_start}"
+                        input type="hidden" class="request-date-end" value="#{request.date_end}"
+                        input type="hidden" class="request-parameters" value="#{request.parameters}"
                         td style="width:40%"
                           a href="/request/#{request.id}" class="request-title" == "#{request.title}"
                           br
@@ -88,10 +92,7 @@ div class="m-grid__item m-grid__item--fluid m-wrapper"
                                 input type="hidden" class="last-body-content" value="#{request.responses.last.body}"
                                 a href="#" role="button" class="show-response" data-toggle="modal" data-target="#modal-show-response" == "#{request.created_at}"
                         td style="width:20%"
-                          - if request.updated_at
-                            == "#{request.updated_at}"
-                          - else
-                            == "#{request.created_at}"
+                          == request.next_request
                         td style="width:10%"
                           - if project.policies.can_edit_requests
                             a href="#" role="button" class="edit-request" data-toggle="modal" data-target="#modal-edit-request" 

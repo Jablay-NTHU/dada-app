@@ -10,8 +10,8 @@
 									span class="m-menu__link-title"
 										span class="m-menu__link-wrap"
 											span class="m-menu__link-text" All Project
-											span class="m-menu__link-badge"
-												span class="m-badge m-badge--danger" 2
+											/ span class="m-menu__link-badge"
+											/ 	span class="m-badge m-badge--danger" 2
 							li class="m-menu__section "
 								h4 class="m-menu__section-text" Projects
 								i class="m-menu__section-icon flaticon-more-v3"
@@ -35,7 +35,7 @@
 														span class="m-menu__link-text" == "#{request.title}"
 											- if project.policies.can_add_requests
 												li class="m-menu__item " aria-haspopup="true"
-													a  href="/request/create/#{project.id}" class="m-menu__link "
+													a  href="/project/#{project.id}/create_request" class="m-menu__link "
 														i class="m-menu__link-icon flaticon-plus"
 															span
 														span class="m-menu__link-text" Add Request

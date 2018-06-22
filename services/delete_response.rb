@@ -17,7 +17,7 @@ class DeleteResponse
   def call(user, response_id)
     response = HTTP.auth("Bearer #{user.auth_token}")
                    .post("#{@config.API_URL}/responses/#{response_id}/delete")
-    puts response
+    # puts response
     raise InvalidResponse unless response.code == 201
     response.code == 201 ? response.parse : nil
   end

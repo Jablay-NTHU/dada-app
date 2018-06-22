@@ -52,7 +52,22 @@ module Dada
 
           routing.on 'edit' do
             routing.post do
-              "#{routing.params}"
+              flash[:params] = routing.params
+              proj_id = routing.params['project_id']
+              # request = Form::EditRequest.call(routing.params)
+              # if request.failure?
+              #   flash[:error] = Form.validation_errors(request)
+              #   routing.redirect '/'
+              # end
+              EditRequest.new(App.config).call(@current_user,
+                                               req_id, routing.params)
+              flash[:notice] = 'Request has been succesfully edited'
+              routing.redirect "/project/#{proj_id}"
+            rescue StandardError => error
+              puts "ERROR EDITING PROJECT: #{error.inspect}"
+              puts error.backtrace
+              flash[:error] = 'Request detail are not valid: please check...'
+              routing.redirect "/project/#{proj_id}"
             end
           end
 
@@ -63,10 +78,10 @@ module Dada
 
               routing.redirect '/error/404' if req_info.nil?
 
-            #   # # puts "REQ: #{req_info}"
-            #   # request = Request.new(req_info)
+              # # puts "REQ: #{req_info}"
+              request = Request.new(req_info)
               view '/request/request_detail/request_detail',
-                  locals: { current_user: @current_user, req_info: req_info },
+                  locals: { current_user: @current_user, req_info: request },
                   layout_opts: { locals: { projects: @projects } }
             else
               routing.redirect '/auth/login'

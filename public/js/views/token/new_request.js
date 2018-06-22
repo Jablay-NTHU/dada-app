@@ -1,4 +1,28 @@
 $(document).ready(function() {  
+
+  function get_today_date() {
+    var today = new Date();
+    console.log(today)
+    var dd = today.getDate();
+    console.log(dd)
+    var mm = today.getMonth()+1; //January is 0!
+    console.log(mm)
+    var yyyy = today.getFullYear();
+    console.log(yyyy)
+    
+    if(dd<10) {
+        dd = '0'+dd
+    } 
+    
+    if(mm<10) {
+        mm = '0'+mm
+    } 
+
+    today = yyyy + '-' + mm + '-' + dd;    
+    console.log(today)
+    return today
+  }
+
   $('#add-parameter-row').on('click', function() {
     key = "parameters[]['key']"
     val = "parameters[]['value']"
@@ -21,13 +45,15 @@ $(document).ready(function() {
 
   $('input.interval').change(function() { 
     val = $(this).val()
-    alert(val)
-    if (val != "Once") {
+    // alert(val)
+    if (val != "once") {
       $('#date-start-div').show();
       $('#date-end-div').show();
       $('#date-start-input').show()
       $('#date-end-input').show()
     } else {
+      $('#date-start-input').val(get_today_date());    
+      $('#date-end-input').val(get_today_date());    
       $('#date-start-div').hide();
       $('#date-end-div').hide();
       $('#date-start-input').hide()
@@ -86,7 +112,6 @@ $(document).ready(function() {
        },
        error: function (data, textStatus, xhr)
        {  
-        alert('asu')
         // status code 404 ==> save on field 'status_code'
         // console.log('status')
         // console.log(data.status)

@@ -73,6 +73,8 @@ module Dada
                 routing.redirect "/project/#{proj_id}/create_request"
               end
 
+              # next_request = routing.params['date_start'] + 7
+              # "next request is  #{next_request} which 7 days after #{routing.params['date_start']}"
               request = {}
               request['title'] = routing.params['title']
               request['description'] = routing.params['description']

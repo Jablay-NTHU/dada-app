@@ -40,7 +40,7 @@ module Dada
       response =
         HTTP.post("#{@config.API_URL}/auth/authenticate/github_account",
                   json: signed_sso_info)
-      puts "response : #{response}, config= #{@config.API_URL}"
+      # puts "response : #{response}, config= #{@config.API_URL}"
       response.code == 200 ? response.parse : nil
     end
   end
