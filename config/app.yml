@@ -29,5 +29,5 @@ production:
   GH_SCOPE:             user:email
   GOOGLE_OAUTH_URL:     https://accounts.google.com/o/oauth2/auth
   GOOGLE_TOKEN_URL:     https://accounts.google.com/o/oauth2/token
-  GOOGLE_REDIRECT_URI:  http://localhost:3000/auth/sso_callback/google_callback
+  GOOGLE_REDIRECT_URI:  https://jablaydada-app.herokuapp.com/auth/sso_callback/google_callback
   GOOGLE_SCOPE:         email
