@@ -82,7 +82,7 @@ module Dada
               puts error.backtrace
               flash[:error] = error.message
               routing.redirect(
-                "#{App.config.APP_URL}/auth/register/#{token}"
+                "#{App.config.APP_URL}/auth/#{token}"
               )
             end
           end
@@ -103,6 +103,12 @@ module Dada
               )
               flash[:notice] = 'Password Reset! Please login'
               routing.redirect '/auth/login'
+            rescue StandardError => error
+              puts error.backtrace
+              flash[:error] = error.message
+              routing.redirect(
+                "#{App.config.APP_URL}/auth/#{token}/forget_password"
+              )
             end
           end
         end
