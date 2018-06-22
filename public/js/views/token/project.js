@@ -1,4 +1,5 @@
 $(document).ready(function() {
+
   $('#project-list').on('click', 'div a.delete-project', function() {
     // Obtaining row information from token-table
     id = $(this).closest('ul').find('input.project-id').val();

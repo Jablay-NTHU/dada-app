@@ -1,18 +1,63 @@
-/ form onsubmit="download(this['name'].value, this['text'].value)"
-/   input type="text" name="name" value="test.txt"
-/   textarea name="text"
-/   input type="submit" value="Download"
+div class="m-grid__item m-grid__item--fluid m-wrapper"
+  div class="m-subheader "
+    div class="d-flex align-items-center"
+      div class="mr-auto"
+        h3 class="m-subheader__title " Download file
+        ul class="m-subheader__breadcrumbs m-nav m-nav--inline"
+          li class="m-nav__item m-nav__item--home"
+            a href="/" class="m-nav__link m-nav__link--icon"
+              i class="m-nav__link-icon la la-home"
+  / END: Subheader					
+  div class="m-content"
+    form class="m-form m-form--fit m-form--state"
+      div class="row"
+        div class="col-lg-12"
+          / begin::Portlet
+          div class="m-portlet"
+            div class="m-portlet__head"
+              div class="m-portlet__head-caption"
+                div class="m-portlet__head-title"
+                  span class="m-portlet__head-icon m--hide"
+                    i class="la la-gear"
+                  h3 class="m-portlet__head-text" Is this what you want?
+            / begin::Form
+            div class="m-portlet__body"
+              / input type="text" name="header-parameter" id="header-parameter-input" class="form-control m-input" placeholder="enter parameter"
+              div class="m-form__section m-form__section--first"
+                div class="form-group m-form__group"
+                  label for="request-input-title" Results
+                  textarea id="text-val" rows="4" class="form-control m-input" #{result}
+            div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit"
+              div class="m-form__actions m-form__actions--solid"
+                input type="button" class="btn btn-success" id="dwn-btn" value="Download to json"
 
-/ javascript:
+javascript:
+   
+  function download(filename, text) {
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+    element.setAttribute('download', filename);
+    element.style.display = 'none';
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+  }
+  // Start file download.
+  document.getElementById("dwn-btn").addEventListener("click", function(){
+  // Generate download of hello.txt file with some content
+    var text = document.getElementById("text-val").value;
+    var filename = "hello.txt";
+    download(filename, text);
+  }, false);
+
+/   document.getElementById( "autoform" ).submit();
 /   function download(filename, text) {
-/   var element = document.createElement('a');
-/   element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
-/   element.setAttribute('download', filename);
-
-/   element.style.display = 'none';
-/   document.body.appendChild(element);
-
-/   element.click();
-
-/   document.body.removeChild(element);
+/     var element = document.createElement('a');
+/     element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+/     element.setAttribute('download', filename);
+/     element.style.display = 'none';
+/     document.body.appendChild(element);
+/     element.click();
+/     document.body.removeChild(element);
 /   }
+   
