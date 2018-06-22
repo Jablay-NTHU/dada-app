@@ -29,11 +29,9 @@ module Dada
           puts "json: #{json.length}"
           path = JsonPath.new(jsonpath)
           result = path.on(json)
-          "The result of the JSON after JSONpath is: </br></br> #{result}"
-          # routing.redirect '/' unless @current_user
-          # view '/response/response_export',
-          #   locals: { current_user: @current_user,result:result }
-          # routing.redirect '/' unless @current_user
+          routing.redirect '/' unless @current_user
+          view '/response/response_export',
+            locals: { current_user: @current_user, result:result }
         end
       end
       # /response/[res_id]
