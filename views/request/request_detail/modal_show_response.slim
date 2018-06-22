@@ -1,0 +1,28 @@
+      / begin::Modal::EditProject
+      div class="modal fade" id="modal-show-response" tabindex="-1" role="dialog" aria-labelledby="showResponseModal" aria-hidden="true"
+        div class="modal-dialog modal-lg" role="document"
+          div class="modal-content"
+            div class="modal-header"
+              h5 class="modal-title" id="exampleModalLabel" Response
+              button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                span aria-hidden="true" &times;
+            form action="/response/export" method="post" id="form-show-response"
+              div class="modal-body"
+                  div class="form-group m-form__group"
+                    label for="status-code" class="form-control-label" Status Code:
+                    input type="text" name="status_code" id="status_code_input" class="form-control m-input" readonly='readonly'
+                  div class="form-group m-form__group"
+                    label for="header" class="form-control-label" Header:
+                    textarea name="header" id="header_input" class="form-control m-input" rows="10" readonly='readonly'
+                  div class="form-group m-form__group"
+                    label for="body" class="form-control-label" Body:
+                    textarea name="body" id="body_input" class="form-control m-input" rows="15" readonly='readonly'
+                  div class="form-group m-form__group"
+                    label for="json_path" class="form-control-label" JSONPath Expression:
+                    textarea name="json_path" id="json-path-input" class="form-control m-input" rows="1"
+              div class="modal-footer"
+                button type="button" class="btn btn-secondary" data-dismiss="modal" Close
+                button type="submit" value="Submit" id='export-response'  class="btn btn-success" Show me the magic
+              / button type="submit" value="Submit" id='edit-project-detail'  class="btn btn-success" Export to JSON
+              / button type="submit" value="Submit" id='edit-project-detail'  class="btn btn-success" Export to YAML
+      / end::Modal

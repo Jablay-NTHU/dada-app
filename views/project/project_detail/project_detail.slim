@@ -74,6 +74,7 @@ div class="m-grid__item m-grid__item--fluid m-wrapper"
                           span
                             i class="request-description" #{request.description}
                         td style="width:10%" class="request-interval" #{request.interval}
+                        / Last Request	
                         td style="width:20%"
                           - if request.updated_at
                             - if !request.responses.last.nil?
@@ -87,19 +88,21 @@ div class="m-grid__item m-grid__item--fluid m-wrapper"
                                 input type="hidden" class="last-body-header" value="#{request.responses.last.header}"
                                 input type="hidden" class="last-body-content" value="#{request.responses.last.body}"
                                 a href="#" role="button" class="show-response" data-toggle="modal" data-target="#modal-show-response" == "#{request.created_at}"
+                        / Next Request
                         td style="width:20%"
                           - if request.updated_at
                             == "#{request.updated_at}"
                           - else
                             == "#{request.created_at}"
+                        / edit request remove request
                         td style="width:10%"
                           - if project.policies.can_edit_requests
                             a href="#" role="button" class="edit-request" data-toggle="modal" data-target="#modal-edit-request" 
-                              i class="flaticon-edit-1"   
+                              i class="flaticon-edit-1"
                             span &nbsp;&nbsp;          
                           - if project.policies.can_remove_requests
                             a href="#" role="button" class="delete-request" data-toggle="modal" data-target="#modal-delete-request" 
-                              i class="flaticon-delete-1"                 
+                              i class="flaticon-delete-1"             
     div class="row"
       div class="col-xl-12"
         div class="m-portlet"

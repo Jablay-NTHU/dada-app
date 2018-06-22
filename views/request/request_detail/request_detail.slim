@@ -80,10 +80,14 @@ div class="m-grid__item m-grid__item--fluid m-wrapper"
                               i class="flaticon-edit-1" data-container="body" data-toggle="m-tooltip" data-placement="bottom" title="View"   
                             span &nbsp;&nbsp;          
                           - if req_info['policies']['can_export_response']
-                            a href="/"
+                            input type="hidden" class="inner_response_status_code" value="#{response['status_code']}"
+                            input type="hidden" class="inner_response_header" value="#{response['header']}"
+                            input type="hidden" class="inner_response_body" value="#{response['body']}"
+                            a href="#" role="button" class="show-response" data-toggle="modal" data-target="#modal-show-response" 
                               i class="flaticon-delete-1" data-container="body" data-toggle="m-tooltip" data-placement="bottom" title="Export"                        
-                            span &nbsp;&nbsp;          
+                            span &nbsp;&nbsp;
                           - if req_info['policies']['can_remove_response']
                             a href="#" role="button" class="delete-response" data-toggle="modal" data-target="#modal-delete-response" 
                               i class="flaticon-delete-1"
       include :modal_delete_response
+      include :modal_show_response
