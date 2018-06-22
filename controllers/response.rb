@@ -29,8 +29,8 @@ module Dada
           puts "json: #{json.length}"
           path = JsonPath.new(jsonpath)
           result = path.on(json)
-          # url = DownloadResponse.new(App.config).call(@current_user, result)
-          url = 'https://s3.amazonaws.com/dada-app/download/victorlin12345/download.json'
+          url = DownloadResponse.new(App.config).call(@current_user, result)
+          # url = 'https://s3.amazonaws.com/dada-app/download/victorlin12345/download.json'
           routing.redirect '/' unless @current_user
           view '/response/response_export',
             locals: { current_user: @current_user,url:url }
