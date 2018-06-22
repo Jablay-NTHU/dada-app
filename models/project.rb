@@ -15,7 +15,7 @@ module Dada
       @title = info['title']
       @description = info['description']
       @public_url = info['public_url']
-      @owner = User.new(info['owner'])
+      @owner = OpenStruct.new(info['owner'])
       @collaborators = process_collaborators(info['collaborators'])
       @requests = process_requests(info['requests'])
       @policies = OpenStruct.new(info['policies'])

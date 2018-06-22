@@ -2,6 +2,7 @@
 
 require 'roda'
 require 'jsonpath'
+require 'open-uri'
 
 module Dada
   # Web controller for Dada API
@@ -19,7 +20,7 @@ module Dada
       end
 
       routing.is 'export' do
-        # GET /request/create
+        # GET /response/expert
         routing.post do
           body = routing.params['body']
           jsonpath = routing.params['json_path']
@@ -28,10 +29,16 @@ module Dada
           puts "json: #{json.length}"
           path = JsonPath.new(jsonpath)
           result = path.on(json)
-          "<p>The magic result that I promise to you eng ing eng: #{result} <br/> 1. You need to modify the body of the api using json path that we input </br> 2. If the result show nothing, show error </br> 3. If the result show something, download --> YAML file</p>"
-          # routing.redirect '/' unless @current_user
-          # view '/response/response_export',
-          #      locals: { current_user: @current_user }
+
+          # File.write('spec/fixtures/gh_response.yml', result.to_yaml)
+
+          # url = DownloadResponse.new(App.config).call(@current_user, result)
+          # url = 'https://s3.amazonaws.com/dada-app/download/victorlin12345/download.json'
+
+          routing.redirect '/' unless @current_user
+          view '/response/response_export',
+            locals: { current_user: @current_user,result:result }
+          routing.redirect '/' unless @current_user
         end
       end
       # /response/[res_id]
