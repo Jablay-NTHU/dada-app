@@ -39,21 +39,21 @@ module Dada
                           client_secret: @config.GOOGLE_CLIENT_SECRET,
                           redirect_uri: @config.GOOGLE_REDIRECT_URI,
                           grant_type: 'authorization_code' })
-      puts "cha: #{challenge_response.status}"
+      # puts "cha: #{challenge_response.status}"
       raise unless challenge_response.status < 400
       challenge_response.parse['access_token']
     end
 
     def get_sso_account_from_api(access_token)
       sso_info = { access_token: access_token }
-      puts "info: #{sso_info}"
+      # puts "info: #{sso_info}"
       signed_sso_info = SecureMessage.sign(sso_info)
-      puts "signed: #{signed_sso_info}"
+      # puts "signed: #{signed_sso_info}"
 
       response =
         HTTP.post("#{@config.API_URL}/auth/authenticate/google_account",
                   json: signed_sso_info)
-      puts "res: #{response}"
+      # puts "res: #{response}"
       response.code == 200 ? response.parse : nil
     end
   end

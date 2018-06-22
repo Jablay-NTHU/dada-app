@@ -1,4 +1,28 @@
 $(document).ready(function() {
+
+  function get_today_date() {
+    var today = new Date();
+    console.log(today)
+    var dd = today.getDate();
+    console.log(dd)
+    var mm = today.getMonth()+1; //January is 0!
+    console.log(mm)
+    var yyyy = today.getFullYear();
+    console.log(yyyy)
+    
+    if(dd<10) {
+        dd = '0'+dd
+    } 
+    
+    if(mm<10) {
+        mm = '0'+mm
+    } 
+
+    today = yyyy + '-' + mm + '-' + dd;    
+    console.log(today)
+    return today
+  }
+
   $('#project-list').on('click', 'div a.delete-project', function() {
     // Obtaining row information from token-table
     id = $(this).closest('ul').find('input.project-id').val();
@@ -37,11 +61,19 @@ $(document).ready(function() {
 
   $('#request-table').on('click', 'tbody tr td a.edit-request', function() {
     id = $(this).closest('tr').find('input.request-id').val();
+    url = $(this).closest('tr').find('input.request-url').val();
     title = $(this).closest('tr').find('td a.request-title').text();
     description = $(this).closest('tr').find('td i.request-description').text();
     interval = $(this).closest('tr').find('td.request-interval').text();
+    date_start = $(this).closest('tr').find('input.request-date-start').val();
+    date_end = $(this).closest('tr').find('input.request-date-end').val();
+    parameters = $(this).closest('tr').find('input.request-parameters').val();
     $('#edit_request_title_input').val(title);    
     $('#edit_request_desc_input').val(description);    
+    $('#edit_request_url_input').val(url);    
+    $('#edit_parameters_input').val(parameters);    
+    $('#date-start-input').val(date_start);    
+    $('#date-end-input').val(date_end);    
 
     if (interval == 'once') {$('#edit-int-once').attr('checked','checked');} else {$('#edit-int-once').removeAttr('checked');}
     if (interval == 'daily') {$('#edit-int-daily').attr('checked','checked');} else {$('#edit-int-daily').removeAttr('checked');}
@@ -53,7 +85,11 @@ $(document).ready(function() {
       $('#date-end-div').show()
       $('#date-start-input').show()
       $('#date-end-input').show()
+      $('#date-start-input').val(date_start);    
+      $('#date-end-input').val(date_end);    
     } else {
+      $('#date-start-input').val(get_today_date());    
+      $('#date-end-input').val(get_today_date());    
       $('#date-start-div').hide()
       $('#date-end-div').hide()
       $('#date-start-input').hide()
